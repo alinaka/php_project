@@ -1,0 +1,39 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.aside_nav {
+    grid-area: aside;
+}
+
+.header {
+    grid-area: header;
+}
+
+.section {
+    grid-area: section;
+    margin: 20px;
+}
+
+.footer {
+    grid-area: footer;
+}
+
+.container {
+  display: grid;
+  grid-template-areas: 
+    'header header header header'
+    'aside section section section'
+    'footer footer footer footer';
+}
+
+.aside_nav__item {
+    padding: 15px;
+    margin: 15px;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+h3 {
+    margin: 0;
+}
