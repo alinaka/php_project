@@ -1,4 +1,4 @@
-<form method="post" action="reg_auth_logout.php" id="reg_form">
+<form method="post" action="../Models/reg_auth_logout.php" id="reg_form">
     
     <label>Имя<input type="text" name="name" id="name"></label>
     <br>

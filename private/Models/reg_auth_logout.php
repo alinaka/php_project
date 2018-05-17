@@ -1,5 +1,4 @@
 <?php
-auth_user();
 
 function check_data(){
     $post = $_POST;
@@ -11,11 +10,11 @@ function check_data(){
 function reg_user(){
     $data = check_data() ? check_data() : false;
     
-    if (is_data_in_file($data, 'data.txt')){
+    if (is_data_in_file($data, '../private/Models/data.txt')){
         echo 'user exists';
         return;
     }
-    if (!add_user($data, 'data.txt')){
+    if (!add_user($data, '../private/Models/data.txt')){
         echo 'not add';
         return;
     }
@@ -47,12 +46,12 @@ function add_user($data, $filename){
 
 function auth_user(){
     $data = check_data();
-    if (!is_data_in_file($data, 'data.txt')){
+    if (!is_data_in_file($data, '../private/Models/data.txt')){
         echo 'логин';
         //ошибка в логине
         return;
     }
-    if (!check_password($data, 'data.txt')){
+    if (!check_password($data, '../private/Models/data.txt')){
         echo 'пароль';
         //ошибка в пароле
         return;
@@ -78,4 +77,11 @@ function check_password($data, $filename){
     }
     return false;
     
+}
+
+function logout(){
+    session_start();
+    unset($_SESSION['login']);
+    setcookie('login', '', time() - 1);
+    setcookie('pwd', '', time() - 1);
 }

@@ -9,7 +9,7 @@
         var formData = new FormData(formElement);
 
         var xhr = new XMLHttpRequest();        
-        xhr.open('POST', 'reg_auth_logout.php', true); //true - запрос синхронный        
+        xhr.open('POST', '/reg_post', true); //true - запрос синхронный        
         xhr.send(formData);
         
         xhr.onreadystatechange = function() {

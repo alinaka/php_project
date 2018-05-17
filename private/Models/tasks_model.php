@@ -25,8 +25,9 @@ $data = [
     ],
 ];
 
-$get = $_GET;
-$id = $get['id'];
+function get_data(&$data){
+    return $data;
+}
 
 function get_data_by_id($data, $id) {
     if (empty($id)) {
@@ -38,29 +39,4 @@ function get_data_by_id($data, $id) {
         }
     }
 }
-
-$res = get_data_by_id($data, $id);
-
 ?>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Главная страница</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <div class="container">
-        <?php include 'header.php'?>
-        <?php include 'aside.php'?>
-        <section class="section">
-            <h3>Задача</h3>
-            <div>
-                <h3><?php echo $res['title']?></h3>
-                <p><?php echo $res['content']?></p>
-                <button>Изменить</button>
-            </div>
-        </section>
-        <?php include 'footer.php'?>
-    </div>
-</body>
-</html>
