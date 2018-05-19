@@ -23,11 +23,11 @@ function reg_user(){
 
 function is_data_in_file($data, $filename){
     $str = file_get_contents($filename);
-    $from_file = explode(";", $str);
+    $from_file = explode("\n", $str);
     
     foreach ($from_file as $val){
         $item = explode(",", $val);
-        if ($data['login'] === $item[2]) {
+        if ($data['login'] === $item[0]) {
             return true;
         }
     }
@@ -40,7 +40,7 @@ function add_user($data, $filename){
     foreach ($data as $val){
         $str .= $val . ",";
     }
-    $str[strlen($str) - 1] = ";";
+    $str[strlen($str) - 1] = "\n";
     return file_put_contents($filename, $str, FILE_APPEND);
 }
 
@@ -67,11 +67,11 @@ function auth_user(){
 function check_password($data, $filename){
     $pwd = $data['password'];
     $str = file_get_contents($filename);
-    $from_file = explode(";", $str);
+    $from_file = explode("\n", $str);
     
     foreach ($from_file as $val){
         $item = explode(",", $val);
-        if (password_verify($pwd, $item[5])) {
+        if (password_verify($pwd, $item[2])) {
             return true;
         }
     }
