@@ -1,3 +1,5 @@
+    <?php include 'header.php'; ?>
+    <?php include 'aside.php'; ?>
 <section class="section">
     <h4>Добро пожаловать, <?php echo $_SESSION['login']?></h4>
     <a href="logout">Выйти</a>

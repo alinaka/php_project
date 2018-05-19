@@ -1,3 +1,5 @@
+    <?php include 'header.php'; ?>
+    <?php include 'aside.php'; ?>
 <section class="section">
     <div>
         <h3><?php echo $task['title'] ?></h3>

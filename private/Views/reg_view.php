@@ -1,14 +1,8 @@
 <form method="post" action="../Models/reg_auth_logout.php" id="reg_form">
     
-    <label>Имя<input type="text" name="name" id="name"></label>
-    <br>
-    <label>Фамилия<input type="text" name="surname" id="surname"></label>
-    <br>
     <label>Логин<input type="text" name="login" id="login"></label>
     <br>
     <label>E-mail<input type="email" name="email" id="email"></label>
-    <br>
-    <label>Телефон<input type="tel" name="phone" id="phone"></label>
     <br>
     <label>Пароль<input type="password" name="password" id="password"></label>
     <br>

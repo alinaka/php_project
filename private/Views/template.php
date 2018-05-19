@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title><?php echo $page_title; ?></title>
+    <link rel="stylesheet" href="css/style.css"></link>
 </head>
 <body>
-    <?php include 'header.php'; ?>
-    <?php include 'aside.php'; ?>
+   <div class="container">
+    <?php include 'logo.php'; ?>
     <?php include $view;?>
     <?php include 'footer.php'; ?>
+   </div>
 </body>
 </html>

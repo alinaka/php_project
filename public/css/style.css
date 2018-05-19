@@ -19,10 +19,14 @@ body {
     grid-area: footer;
 }
 
+.logo {
+    grid-area: logo;
+}
+
 .container {
   display: grid;
   grid-template-areas: 
-    'header header header header'
+    'logo header header header'
     'aside section section section'
     'footer footer footer footer';
 }
