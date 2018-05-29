@@ -1,13 +1,25 @@
-<form method="post" action="../Models/reg_auth_logout.php" id="reg_form">
-    
-    <label>Логин<input type="text" name="login" id="login"></label>
-    <br>
-    <label>E-mail<input type="email" name="email" id="email"></label>
-    <br>
-    <label>Пароль<input type="password" name="password" id="password"></label>
-    <br>
-    <label>Повторите пароль<input type="password" name="password_check" id="password_check"></label>
-    <br>
-    <input type="submit" value="Зарегистрироваться">
-</form>
-<script src="../js/registration.js"></script>
+<?php include 'logo.php'; ?>
+<div class="wrapper">		
+		<form method="post" id="reg_form">
+		    <div class="form-group">
+		    	<label for="login">Логин</label>
+		    	<input class="form-control" type="text" name="login" id="login"> 
+			</div>
+		    <div class="form-group">
+		    	<label for="email">E-mail</label>
+		    	<input class="form-control" type="email" name="email" id="email"> 
+			</div>
+		    <div class="form-group">
+		    	<label for="password">Пароль</label>
+		    	<input class="form-control" type="password" name="password" id="password"> 
+			</div>
+			<div class="form-group">
+		    	<label for="password_check">Повторите пароль</label>
+		    	<input class="form-control" 
+		    			type="password" 
+		    			name="password_check" 
+		    			id="password_check"> 
+			</div>
+		    <input type="submit" value="Зарегистрироваться" onsubmit=>
+		</form>
+</div>

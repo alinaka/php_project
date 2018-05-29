@@ -1,9 +1,18 @@
-<form method="post" action="../Models/reg_auth_logout.php" id="auth_form">
-    <label>Логин<input type="text" name="login"></label>
-    <br>
-    <label>Пароль<input type="password" name="password"></label>
-    <br>
-    <label>Запомнить меня<input type="checkbox" name="remember"></label>
-    <input type="submit" value="Войти">
-</form>
-<script src="js/auth.js"></script>
+<?php include 'logo.php'; ?>
+<div class="wrapper">
+		<form method="post" id="auth_form">
+			<div class="form-group">
+		    	<label for="login">Логин</label>
+		    	<input class="form-control" type="text" name="login" id="login"> 
+			</div>
+			<div class="form-group">
+		    	<label for="password">Пароль</label>
+		    	<input class="form-control" type="password" id="password" name="password">
+		    </div>
+		    <div class="form-group form-check">
+		    	<input class="form-check-input" type="checkbox" id="check" name="remember">
+		    	<label class="form-check-label" for="check">Запомнить меня</label>
+		    </div>
+		    <input type="submit" value="Войти">    
+		</form>
+</div>

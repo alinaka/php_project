@@ -1,0 +1,13 @@
+{
+    "name": "alina/project",
+    "description": "PHP project",
+    "type": "project",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+    	"psr-4": {
+    		"alina\\project\\": "private/"
+    	}
+    }
+}
