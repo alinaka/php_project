@@ -1,19 +1,89 @@
+body {
+	background-color: #f7f7f7;
+}
+
 .fa-clock {
     font-size: 50px;
 }
 
+.fab {
+	font-size: 25px;
+}
+
+.fa-vk {
+	color: rgb(71, 71, 207);
+}
+
+.fa-twitter {
+	color: rgb(59, 198, 199);
+}
+
+.fa-facebook {
+	color: rgb(38, 38, 137);
+}
+
+.fa-google-plus {
+	color: rgb(242, 51, 51);
+}
+
+.fa-linkedin {
+	color: rgb(0, 123, 255);
+}
+
+.logo {
+	margin-top: 20px;
+}
+
 .jumbotron {
         background-color: white;
+            margin-top: 2rem;
 }
+
 .sign_link {
     font-size: 20px;
 }
 
 .wrapper {
-    max-width: 350px;
+    max-width: 500px;
+    margin-top: 2rem;
+    background-color: white;
+    padding: 2rem 2rem;
+    border-radius: .5rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
 }
 .aside_nav__item{
-    margin: 10px 0px;
-    font-size: 18px;
-    padding: 15px;
+    font-size: 15px;
+    padding: 9px;
+}
+
+.content__header{
+	margin-bottom: 1rem;
+}
+
+.content__add_button{
+	    position: absolute;
+    right: 2rem;
+    top: 1.5rem;
+}
+
+.content {
+	background-color: white;
+    padding-left: 3rem;
+    padding-top: 1.5rem;
+    border-radius: 10px;
+}
+
+.aside_nav__item_text {
+	padding-left: 10px;
+    display: inline-block;
+}
+
+.navbar {
+	margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.footer-copyright {
+	color: grey;
+	font-size: 12px;
 }

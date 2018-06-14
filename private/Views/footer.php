@@ -1,18 +1,18 @@
-<footer class="page-footer font-small stylish-color-dark pt-4 mt-4">
+<footer class="page-footer font-small pt-4 mt-4">
   <hr>
 
 	<ul class="list-unstyled list-inline text-center">
 	  <li class="list-inline-item">
-	    <a class="nav-link active" href="#">Active</a>
+	    <a class="nav-link active" href="#">Главная</a>
 	  </li>
 	  <li class="list-inline-item">
-	    <a class="nav-link" href="#">Link</a>
+	    <a class="nav-link" href="#">Помощь</a>
 	  </li>
 	  <li class="list-inline-item">
-	    <a class="nav-link" href="#">Link</a>
+	    <a class="nav-link" href="#">Информация</a>
 	  </li>
 	  <li class="list-inline-item">
-	    <a class="nav-link disabled" href="#">Disabled</a>
+	    <a class="nav-link" href="#">Контакты</a>
 	  </li>
 	</ul>
 
@@ -43,6 +43,7 @@
       </a>
     </li>
   </ul>
-  <div class="footer-copyright text-center py-3">©Санкт-Петербург, 2018
+  <div class="footer-copyright text-center">
+    Готовцева Алина - Университет ИТМО - Санкт-Петербург, 2018
   </div>
 </footer>

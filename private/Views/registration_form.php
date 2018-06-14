@@ -1,6 +1,4 @@
-<?php include 'logo.php'; ?>
-<div class="wrapper">		
-		<form method="post" id="reg_form">
+<form method="post" id="reg_form" action="account/post">
 		    <div class="form-group">
 		    	<label for="login">Логин</label>
 		    	<input class="form-control" type="text" name="login" id="login"> 
@@ -20,6 +18,6 @@
 		    			name="password_check" 
 		    			id="password_check"> 
 			</div>
-		    <input type="submit" value="Зарегистрироваться" onsubmit=>
+			<input type="submit" form="reg_form" class="btn btn-primary" value="Зарегистрироваться">
 		</form>
-</div>
+		<script src="/js/reg.js"></script>

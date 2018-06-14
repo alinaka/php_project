@@ -1,26 +1,19 @@
 (function() {
     'use strict';
+    var task_form = document.getElementById('task_form');
+    task_form.addEventListener('submit', submitForm);
 
-    var auth_form = document.getElementById('auth_form');
-    if (auth_form) {
-        auth_form.addEventListener('submit', submitAuthForm);
-    }
-
-    function submitAuthForm(event){
+    function submitForm(event){
         event.preventDefault();
-        send_auth_data();
+        send_data();
     }
     
-    function checkForm() {
-
-    } 
-    
-    function send_auth_data(){
-        var formElement = document.getElementById('auth_form');
+    function send_data(){
+        var formElement = task_form;
         var formData = new FormData(formElement);
 
         var xhr = new XMLHttpRequest();        
-        xhr.open('POST', '/account/auth'); //true - запрос синхронный        
+        xhr.open('POST', '/task/add', true); //true - запрос синхронный        
         xhr.send(formData);
         
         xhr.onreadystatechange = function() {

@@ -1,50 +1,37 @@
 <?php
 namespace alina\project\Models;
+use alina\project\App\DB;
 
 class TaskModel
 {
-    function get_data(){
-        $data = [
-            [
-                'id' => 1,
-                'title' => 'Отредактировать тестовое задание',
-                'content' => 'Переделать по новому макету',
-            ],
-            [
-                'id' => 2,
-                'title' => 'Сделать домашку по PHP',
-                'content' => 'Вывод данных из массива в html, исходя из логики дипломного проекта;
-                                Валидация формы на стороне клиента;
-                                Получение данных форма на сервере.',
-            ],
-            [
-                'id' => 3,
-                'title' => 'Почитать книжку',
-                'content' => 'content3',
-            ],
-            [
-                'id' => 4,
-                'title' => 'Посмотреть видеоурок',
-                'content' => 'content4',
-            ],
-        ];
-        
-        return $data;
+    private $db;
+    private $tablename = "Task";
+
+    public function __construct(){
+        $this->db = new DB();
     }
 
-    function get_data_by_id($data, $id) {
+    public function getAllTasks(){
+        $sql_str = "SELECT * FROM $this->tablename";
+        return $this->db->selectAllFromTable($sql_str);
+    }
+
+    public function getTaskById($id) {
         if (empty($id)) {
             return false;
         }
-        foreach ($data as $val) {
-            if($id == $val['id']) {
-                return $val;
-            }
-        }
+        $sql_str = "SELECT * FROM $this->tablename
+                    WHERE task_id = :id";
+        $params = [
+            'id' => $id
+        ];
+        return $this->db->fetchData($sql_str, $params);
+    }
+
+    public function addTask($task_data){
+        $sql = "INSERT INTO $this->tablename (title, description, date_start_plan, date_end_plan, time_plan)
+        VALUES (:title, :description, :date_start_plan, :date_end_plan, :time_plan)";
+        return $this->db->executePreparedQuery($sql, $task_data);
     }
 }
-
-
-
-
 ?>

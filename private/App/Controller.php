@@ -10,6 +10,6 @@ class Controller
 			extract($data);
 		}
 
-		include '../private/Views/template.php';
+		include '../private/Views/template.php'; // должна быть переменная
 	}
 }

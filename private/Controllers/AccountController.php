@@ -2,95 +2,82 @@
 
 namespace alina\project\Controllers;
 use alina\project\App\Controller;
-use alina\project\Models\AuthModel;
-
+use alina\project\Models\AccountModel;
+use alina\project\App\Request;
+use alina\project\App\Session;
 
 class AccountController extends Controller
 {
     private $model;
+    private $reguest;
+    private $session;
 
-    function __construct(){
-        $this->model = new AuthModel();
+    public function __construct(){
+        session_start();
+        $this->model = new AccountModel();
+        $this->request = new Request();
+        $this->session = new Session();
+    }
+    
+    public function indexAction(){
+        if ($this->session->is_session_var('login')) {
+            $view = 'account_view.php';
+            $title = 'Личная информация';
+            $this->generateView($view, [
+                        'page_title' => $title,
+            ]);
+        } else {
+            header('Location: /');
+            exit();
+        }
     }
 
-    function authAction(){
-        session_start();
+    public function authAction(){
         if (isset($_COOKIE['login'])) {
             $_SESSION['auth'] = true;
             $_SESSION['login'] = $_COOKIE['login'];
         }
-        if ($_SESSION['auth']) {
-            echo "Вы уже авторизованы";
+        if ($this->session->is_session_var('login')) {
+            header('Location: /task');
+            exit();
         } else {
-            $view = 'auth_view.php';
-            $title = "Авторизоваться";
-            $this->generateView($view, [
-                    'page_title' => $title,
-                    ]);
-        }
-    }
+            $post = $this->request->post();
+            $auth_data = [
+                'login'=>$post['login'],
+                'password'=>$post['password'],
+            ];
+            echo $this->model->auth_user($auth_data);
 
-    function postAction(){
-        session_start();
-        $data = $this->model->check_data();
-        //авторизация
-        if (count($data)==2 || count($data)==3){
-            if (!$this->model->is_data_in_file($data, '../private/Models/data.txt')){
-                echo 'Неверный логин';
-                return;
-            }
-            if (!$this->model->check_password($data, '../private/Models/data.txt')){
-                echo 'Неверный пароль';
-                return;
-            }
-            if($data['remember']){
+            if($post['remember']){
                 setcookie('login', $data['login'], time() + 3600 * 24 * 180);
                 setcookie('pwd', password_hash($data['password'], PASSWORD_DEFAULT), time()+3600 * 24 * 180);
             }
-            $_SESSION['login'] = $data['login'];
-            $_SESSION['auth'] = true;
-            echo "success";
-        } else if (count($data) == 4){
-            echo "это регистрация";
-            $data = $this->model->check_data();
-        
-            if ($this->model->is_data_in_file($data, '../private/Models/data.txt')){
-                //TO DO добавить проверку e-mail на уникальность и 
-                //проверять валидность пароля только после проверки 
-                //желаемого логина на существование
-                echo 'Пользователь с таким логином уже зарегистрирован';
-                return;
-            }
-
-            if (!$this->model->add_user($data, '../private/Models/data.txt')){
-                echo 'Пользователь не прошел регистрацию';
-                return;
-            }
-            echo 'Пользователь прошел регистрацию';
-        }      
+            $this->session->set_session_var('login', $auth_data['login'] );
+        }
     }
 
-    function registrationAction(){
-        session_start();
+    public function registrationAction(){
         if (isset($_COOKIE['login'])) {
             $_SESSION['auth'] = true;
             $_SESSION['login'] = $_COOKIE['login'];
         }
-        if ($_SESSION['auth']) {
-            echo "Вы уже авторизованы";
+        if ($this->session->is_session_var('login')) {
+            header('Location: /task');
+            exit();
         } else {
-            $view = 'reg_view.php';
-            $title = 'Зарегистрироваться';
-            
-            $this->generateView($view, [
-                             'page_title' => $title,
-                                ]);
+            $post = $this->request->post();
+            $reg_data = [
+                'login'=>$post['login'],
+                'hash'=>password_hash($post['password'], PASSWORD_DEFAULT),
+                'email'=>$post['email'],
+                'avatar'=>'avatar.jpg',
+            ];
+            echo $this->model->add_user($reg_data);
         }
     }
 
-    function logoutAction(){
-        session_start();
-        unset($_SESSION['auth']);
+    public function logoutAction(){
+        $this->session->remove_session_var('login');
         setcookie('login', '', time() - 1);
         setcookie('pwd', '', time() - 1);
         header('Location: /');
