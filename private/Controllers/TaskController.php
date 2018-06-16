@@ -18,13 +18,15 @@ class TaskController extends Controller
     public function showAction($get){
         if ($this->session->is_session_var('login')){
             $data = $this->model->getAllTasks();
-            $view = 'task_view.php';
+            $view = 'task.twig';
             $title = 'Задача';
             $id = $get;
             $task = $this->model->getTaskById($id);
-            $this->generateView($view, [
+            echo $this->generateView($view, [
                         'page_title' => $title,
-                        'task' => $task]);
+                        'task' => $task,
+                        'login'=>$this->session->get_session_var('login'),
+                ]);
         } else {
             header('Location: /');
             exit();
@@ -35,21 +37,24 @@ class TaskController extends Controller
         if ($this->session->is_session_var('login')){
             if(count($_POST) > 0){
                 $post = $_POST;
+  
                 $task_data = [
                     'title' => $post['title'],
                     'description' => $post['description'],
                     'date_start_plan' => $post['date_start_plan'],
                     'date_end_plan' => $post['date_end_plan'],
                     'time_plan' => $post['time_plan'],
+                    'author_id'=> 1
                 ];
                 echo $this->model->addTask($task_data);
             } else {
-                $view = 'task_сreate_view.php';
+                $view = 'task_сreate.twig';
                 $title = 'Добавление задачи';
                 $header = 'Новая задача';
-                $this->generateView($view, [
+                echo $this->generateView($view, [
                         'page_title' => $title,
-                        'header' => $header
+                        'header' => $header,
+                        'login'=>$this->session->get_session_var('login'),
                     ]);
             }
         } else {
@@ -63,12 +68,13 @@ class TaskController extends Controller
             if(count($_POST) > 0){
 
             } else {
-                $view = 'task_сreate_view.php';
+                $view = 'task_сreate.twig';
                 $title = 'Добавление задачи';
                 $header = 'Редактирование задачи';
-                $this->generateView($view, [
+                echo $this->generateView($view, [
                         'page_title' => $title,
-                        'header' => $header
+                        'header' => $header,
+                        'login'=>$this->session->get_session_var('login'),
                 ]);
             }
         } else {
@@ -79,16 +85,16 @@ class TaskController extends Controller
 
     public function indexAction(){
         if (isset($_COOKIE['login'])) {
-            $_SESSION['auth'] = true;
-            $_SESSION['login'] = $_COOKIE['login'];
+            $this->session->set_session_var('login', $_COOKIE['login']);
         }
         if ($this->session->is_session_var('login')){
             $data = $this->model->getAllTasks();
-            $view = 'tasks_view.php';
+            $view = 'tasks.twig';
             $title = 'Личная страница';
-            $this->generateView($view, [
+            echo $this->generateView($view, [
                         'page_title' => $title,
                         'data' => $data,
+                        'login'=>$this->session->get_session_var('login'),
             ]);
         } else {
             header('Location: /');

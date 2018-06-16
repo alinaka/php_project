@@ -1,0 +1,20 @@
+{% extends "base.twig" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block content %}
+    {% include 'nav.twig'%}
+    <section class="section row">
+        {% include 'aside.php' %}
+        <div class="content col-10">
+             <h3>{{ task.title }}</h3>
+            <p>Описание: {{ task.description }}</p>
+            <p>Дата начала: {{ task.date_start_plan }}</p>
+            <p>Дата завершения: {{ task.date_end_plan }}</p>
+            <p>Планируемое время выполнения: {{ task.time_plan }}</p>
+            <a class="btn btn-primary btn-md" href="/task/edit">Изменить</a>
+        </div>
+    </section>
+{% endblock %}

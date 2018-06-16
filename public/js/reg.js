@@ -2,6 +2,8 @@
     'use strict';
 
     var reg_form = document.getElementById('reg_form');
+    var result_message = document.getElementById('result_message');
+    
     if (reg_form) {
         reg_form.addEventListener('submit', submitForm);
     }
@@ -35,11 +37,8 @@
         }
         return 1;
     }
-    
-    
-    
+
     function show_message(result){
-        var result_message = document.getElementById('result_message');
         switch(result) {
             case 'pwd': 
                 result_message.innerText = `Пароль должен удовлетворять следующим требованиям:

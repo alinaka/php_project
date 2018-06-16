@@ -1,8 +1,16 @@
-<?php include 'nav.php'; ?>
-<section class="section row">
- <?php include 'aside.php'; ?>
-<div class="wrapper mx-auto col-10">
-		<h3><?php echo $header; ?></h3>	
+{% extends "base.twig" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block content %}
+    {% include 'nav.twig'%}
+    {% include "result_modal.php" %}
+    <section class="section row">
+        {% include 'aside.php' %}
+        <div class="wrapper mx-auto col-10">
+		<h3>{{ header }}</h3>	
 		<form method="post" id="task_form">
 		    <div class="form-group">
 		    	<label for="title">Название</label>
@@ -26,6 +34,10 @@
 			</div>
 		    <input type="submit" class="btn btn-primary btn-md" value="Добавить задачу">
 		</form>
-</div>
-</section>
-<script src="/js/addTask.js"></script>
+        </div>
+    </section>
+{% endblock %}
+{% block scripts %}
+    {{ parent()}}
+    <script src="/js/addTask.js"></script>
+{% endblock %}

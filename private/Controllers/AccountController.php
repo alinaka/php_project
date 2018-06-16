@@ -21,10 +21,11 @@ class AccountController extends Controller
     
     public function indexAction(){
         if ($this->session->is_session_var('login')) {
-            $view = 'account_view.php';
+            $view = 'account.twig';
             $title = 'Личная информация';
-            $this->generateView($view, [
+            echo $this->generateView($view, [
                         'page_title' => $title,
+                        'login'=>$this->session->get_session_var('login'),
             ]);
         } else {
             header('Location: /');
@@ -33,9 +34,8 @@ class AccountController extends Controller
     }
 
     public function authAction(){
-        if (isset($_COOKIE['login'])) {
-            $_SESSION['auth'] = true;
-            $_SESSION['login'] = $_COOKIE['login'];
+        if (isset($_COOKIE['login'])){
+           $this->session->set_session_var('login', $_COOKIE['login']);
         }
         if ($this->session->is_session_var('login')) {
             header('Location: /task');
@@ -58,8 +58,7 @@ class AccountController extends Controller
 
     public function registrationAction(){
         if (isset($_COOKIE['login'])) {
-            $_SESSION['auth'] = true;
-            $_SESSION['login'] = $_COOKIE['login'];
+            $this->session->set_session_var('login', $_COOKIE['login']);
         }
         if ($this->session->is_session_var('login')) {
             header('Location: /task');

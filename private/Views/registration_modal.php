@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <?php include_once "registration_form.php";?>
+                {% include "registration_form.php" %}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>

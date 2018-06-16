@@ -18,6 +18,5 @@
 		    			name="password_check" 
 		    			id="password_check"> 
 			</div>
-			<input type="submit" form="reg_form" class="btn btn-primary" value="Зарегистрироваться">
 		</form>
 		<script src="/js/reg.js"></script>

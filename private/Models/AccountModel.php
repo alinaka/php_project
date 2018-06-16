@@ -36,7 +36,7 @@ class AccountModel
                 VALUES (:login, :hash, :email, :avatar)";
             return $this->db->executePreparedQuery($sql, $reg_data);
         }
-        return 'пользователь существует';
+        return 0;
     }
 
     protected function check_password($auth_data){

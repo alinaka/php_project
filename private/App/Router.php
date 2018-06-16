@@ -8,7 +8,8 @@ class Router
 		$action = 'index';
 		$get = null;
 
-		$routes = explode('/', $_SERVER['REQUEST_URI']);
+                $request = new Request();
+                $routes = explode('/', $request->getUri());
 
 		if (!empty($routes[1])) {
 			$controller = $routes[1];

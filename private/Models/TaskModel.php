@@ -12,7 +12,7 @@ class TaskModel
     }
 
     public function getAllTasks(){
-        $sql_str = "SELECT * FROM $this->tablename";
+        $sql_str = "SELECT * FROM $this->tablename WHERE author_id = 1";
         return $this->db->selectAllFromTable($sql_str);
     }
 
@@ -29,8 +29,8 @@ class TaskModel
     }
 
     public function addTask($task_data){
-        $sql = "INSERT INTO $this->tablename (title, description, date_start_plan, date_end_plan, time_plan)
-        VALUES (:title, :description, :date_start_plan, :date_end_plan, :time_plan)";
+        $sql = "INSERT INTO $this->tablename (title, description, date_start_plan, date_end_plan, time_plan, author_id)
+        VALUES (:title, :description, :date_start_plan, :date_end_plan, :time_plan, :author_id)";
         return $this->db->executePreparedQuery($sql, $task_data);
     }
 }
