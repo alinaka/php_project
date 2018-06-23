@@ -7,13 +7,12 @@
 {% block content %}
     {% include 'nav.twig'%}
     <section class="section row">
-        {% include 'aside.php' %}
+        {% include 'aside.twig' %}
         <div class="col-10">
-            <h3>имя и фамилия</h3>
-            <p>Аватар</p>
-            <p>День рождения</p>
-            <p>E-mail</p>
-            <p></p>
+            <h3>{{user.name }} {{ user.surname }}</h3>
+            <img src="/img/{{ user.avatar }}">
+            <p>{{ user.date_of_birth }}</p>
+            <p>{{ user.email }}</p>
             <a class="btn btn-primary btn-md" href="#">Изменить</a>
         </div>
     </section>

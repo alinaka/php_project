@@ -5,9 +5,9 @@ class Response
 {
     private $headers = [];
     private $body;
-    private $statusCode = [];
+    private $statusCode;
     
-    public function __construct($body='', $headers=[], $statusCode=[]){
+    public function __construct($body='', $headers=[], $statusCode=200){
         $this->setBody($body)
                 ->setHeaders($headers)
                 ->setStatusCode($statusCode);
@@ -50,6 +50,12 @@ class Response
         }
         http_response_code($this->statusCode);
         return $this;
+    }
+    
+    public function send(){
+        $this
+            ->sendHeaders()
+            ->sendBody();
     }
     
 }

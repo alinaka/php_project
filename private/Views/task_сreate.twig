@@ -6,11 +6,11 @@
 {% endblock %}
 {% block content %}
     {% include 'nav.twig'%}
-    {% include "result_modal.php" %}
+    {% include "result_modal.twig" %}
     <section class="section row">
-        {% include 'aside.php' %}
+        {% include 'aside.twig' %}
         <div class="wrapper mx-auto col-10">
-		<h3>{{ header }}</h3>	
+		<h3>Новая задача</h3>	
 		<form method="post" id="task_form">
 		    <div class="form-group">
 		    	<label for="title">Название</label>

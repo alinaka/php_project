@@ -48,4 +48,13 @@ class AccountModel
         $data = $this->db->fetchData($sql, $params);
         return password_verify($auth_data['password'], $data['hash']);
     }
+    
+    public function get_userdata($login){
+        $sql = "SELECT * FROM $this->tablename 
+            WHERE login=:login";
+        $params = [
+            'login' => $login
+        ];
+        return $this->db->fetchData($sql, $params);
+    }
 }

@@ -32,7 +32,7 @@ class Router
 			var_dump("Класс не задан");
 		}
 		if (method_exists($controller, $action)){
-			$controller->$action($get);
+			$controller->$action($get)->send();
 		} else {
 			var_dump("Метод не найден");
 		}

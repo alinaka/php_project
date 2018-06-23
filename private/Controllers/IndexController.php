@@ -1,34 +1,32 @@
 <?php
 namespace alina\project\Controllers;
 use alina\project\App\Controller;
-use alina\project\App\Template;
 use alina\project\App\Session;
+use alina\project\App\Response;
 
 class IndexController extends Controller
 {
-//    private $template_maker;
-//    
-//    function construct __(){
-//        $this->template_maker = new Template();
-//    }
     private $session;
+    private $template_maker;
     
     public function __construct(){
+        parent::__construct();
         session_start();
         $this->session = new Session();
     }
 	
     public function indexAction(){  
             if ($this->session->is_session_var('login')){
-                header('Location: /task');
-                exit();
+                return new Response('', [
+                    'Location'=>'/task'
+                ]);
             }
             else {
                 $view = 'index.twig';
                 $title = 'Главная страница';
-                echo $this->generateView($view, [
+                return new Response($this->generateView($view, [
                                     'page_title' => $title,
-                ]);
+                ]));
             }
 	}
 }

@@ -33,5 +33,12 @@ class TaskModel
         VALUES (:title, :description, :date_start_plan, :date_end_plan, :time_plan, :author_id)";
         return $this->db->executePreparedQuery($sql, $task_data);
     }
+    
+    public function updateTask($task_data){
+        $sql = "UPDATE $this->tablename
+            SET title = :title, description = :description, date_start_plan = :date_start_plan, date_end_plan = :date_end_plan, time_plan = :time_plan, author_id=:author_id
+            WHERE task_id = :id";
+        return $this->db->executePreparedQuery($sql, $task_data);
+    }
 }
 ?>
