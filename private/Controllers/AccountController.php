@@ -2,10 +2,11 @@
 
 namespace alina\project\Controllers;
 use alina\project\App\Controller;
-use alina\project\Models\AccountModel;
 use alina\project\App\Request;
 use alina\project\App\Response;
 use alina\project\App\Session;
+use alina\project\Models\AccountModel;
+use alina\project\Models\User;
 
 class AccountController extends Controller
 {
@@ -70,11 +71,13 @@ class AccountController extends Controller
             ]);
         } else {
             $post = $this->request->post();
+            $user = new User($post['login'], 
+                            password_hash($post['password'], PASSWORD_DEFAULT),
+                            $post['email']);
             $reg_data = [
-                'login'=>$post['login'],
-                'hash'=>password_hash($post['password'], PASSWORD_DEFAULT),
-                'email'=>$post['email'],
-                'avatar'=>'avatar.jpg',
+                'login'=>$user->getLogin(),
+                'hash'=>$user->getHash(),
+                'email'=>$user->getEmail()
             ];
             return new Response($this->model->add_user($reg_data));
         }

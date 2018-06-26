@@ -41,4 +41,3 @@ class TaskModel
         return $this->db->executePreparedQuery($sql, $task_data);
     }
 }
-?>

@@ -32,8 +32,8 @@ class AccountModel
 
     public function add_user($reg_data){
         if($this->is_user_registered($reg_data['login']) == false){
-            $sql = "INSERT INTO $this->tablename(login, hash, email, avatar) 
-                VALUES (:login, :hash, :email, :avatar)";
+            $sql = "INSERT INTO $this->tablename(login, hash, email) 
+                VALUES (:login, :hash, :email)";
             return $this->db->executePreparedQuery($sql, $reg_data);
         }
         return 0;

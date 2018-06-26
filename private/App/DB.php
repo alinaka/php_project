@@ -13,7 +13,7 @@ class DB
 		$this->server_name = 'localhost';
 		$this->db_name = 'tt_project';
 		$this->username = 'root';
-		$this->pwd = '6945213qW!';
+		$this->pwd = '';
 	}
 
 	private function DBConnect(){

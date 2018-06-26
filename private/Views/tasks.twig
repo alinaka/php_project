@@ -21,7 +21,15 @@
                 </tr>
                 {% for item in data %}
                     <tr>
-                        <td><a href="/task/show/{{ item.task_id }}">{{ item.title }}</a></td>
+                        <td>
+                            <a href="/task/show/{{ item.task_id }}">{{ item.title }}</a>
+                            <div id="chrono">
+                                <button class="startButton"><i class="fas fa-play-circle"></i></button>
+                                    <div class="values">00:00:00</div>
+                                    <button class="pauseButton" >Pause</button>
+                                    <button class="stopButton">Stop</button>
+                            </div>
+                        </td>
                         <td>{{ item.date_end_plan }}</td>
                         <td>{{ item.time_fact }}</td>
                         <td>{{ item.time_plan }}</td>
@@ -31,4 +39,9 @@
             </table>
         </div>
     </section>
+{% endblock %}
+{% block scripts %}
+    {{ parent()}}
+    <script src="/js/easytimer.min.js"></script>
+    <script src="/js/myTimer.js"></script>
 {% endblock %}
