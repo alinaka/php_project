@@ -5,6 +5,7 @@ use alina\project\Models\TaskModel;
 use alina\project\App\Session;
 use alina\project\App\Request;
 use alina\project\App\Response;
+use alina\project\App\QueryBuilder;
 
 class TaskController extends Controller
 {
@@ -49,9 +50,10 @@ class TaskController extends Controller
                     'date_start_plan' => $post['date_start_plan'],
                     'date_end_plan' => $post['date_end_plan'],
                     'time_plan' => $post['time_plan'],
-                    'author_id'=> 1
+                    'author_id'=> 1,
+                    'project_id'=> 1
                 ];
-                return new Response ($this->model->addTask($task_data));
+                return new Response ($this->model->add($task_data));
             } else {
                 $view = 'task_сreate.twig';
                 $title = 'Добавление задачи';
@@ -72,7 +74,7 @@ class TaskController extends Controller
             if(count($_POST) > 0){
                 $post = $this->request->post();
                 $task_data = [
-                    'id' => $post['task_id'],
+                    'task_id' => $post['task_id'],
                     'title' => $post['title'],
                     'description' => $post['description'],
                     'date_start_plan' => $post['date_start_plan'],
@@ -80,7 +82,7 @@ class TaskController extends Controller
                     'time_plan' => $post['time_plan'],
                     'author_id'=> 1
                 ];
-                return new Response($this->model->updateTask($task_data));
+                return new Response($this->model->save($task_data));
             } else {
                 $id = $get;
                 $task = $this->model->getTaskById($id);
@@ -118,5 +120,23 @@ class TaskController extends Controller
             ]);
         }
         
+    }
+    
+    public function fileAction(){
+        $uploaddir = '../uploads/';
+        $uploadfile = $uploaddir . basename($_FILES['doc']['name']);
+
+        echo '<pre>';
+        if (move_uploaded_file($_FILES['doc']['tmp_name'], $uploadfile)) {
+            echo "Файл корректен и был успешно загружен.\n";
+        } else {
+        echo "Возможная атака с помощью файловой загрузки!\n";
+        }
+
+        echo 'Некоторая отладочная информация:';
+        print_r($_FILES);
+
+        print "</pre>";
+
     }
 }

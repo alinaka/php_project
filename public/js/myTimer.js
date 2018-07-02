@@ -2,15 +2,17 @@
     'use strict';
     
     
-    $('.chrono .startButton').click(function (e) {
+    $('.startButton').click(function(e) {
         var timer = new Timer();
-        
+        var target = e.target.nextElementSibling;
         timer.start();
-        
-        timer.addEventListener('secondsUpdated', function (e) {
-        $('#chrono .values').html(timer.getTimeValues().toString());
+        console.log(target);
+        timer.addEventListener('secondsUpdated', function(e) {
+            target.innerText = timer.getTimeValues().toString();
+            $('#tracker').html(timer.getTimeValues().toString());
         });
         timer.addEventListener('started', function (e) {
+            //стили - изменений иконки
             $('#chrono .values').html(timer.getTimeValues().toString());
         });
         timer.addEventListener('reset', function (e) {

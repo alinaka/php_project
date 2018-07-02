@@ -87,3 +87,7 @@ body {
 	color: grey;
 	font-size: 12px;
 }
+
+.valid {
+    border-color: green;
+}

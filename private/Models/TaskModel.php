@@ -1,6 +1,7 @@
 <?php
 namespace alina\project\Models;
 use alina\project\App\DB;
+use alina\project\App\QueryBuilder;
 
 class TaskModel
 {
@@ -9,35 +10,51 @@ class TaskModel
 
     public function __construct(){
         $this->db = new DB();
+        $this->builder = new QueryBuilder();
     }
 
     public function getAllTasks(){
-        $sql_str = "SELECT * FROM $this->tablename WHERE author_id = 1";
-        return $this->db->selectAllFromTable($sql_str);
+        $sql = $this->builder
+                ->select($this->tablename)
+                ->where()
+                ->equals('author_id', 1)
+                ->getSql();
+        return $this->db->selectAllFromTable($sql);
     }
 
     public function getTaskById($id) {
-        if (empty($id)) {
-            return false;
-        }
-        $sql_str = "SELECT * FROM $this->tablename
-                    WHERE task_id = :id";
+        $sql = $this->builder
+                ->select($this->tablename)
+                ->where()
+                ->equals('task_id')
+                ->getSql();
         $params = [
-            'id' => $id
+            'task_id' => $id
         ];
-        return $this->db->fetchData($sql_str, $params);
+        return $this->db->fetchData($sql, $params);
     }
 
-    public function addTask($task_data){
-        $sql = "INSERT INTO $this->tablename (title, description, date_start_plan, date_end_plan, time_plan, author_id)
-        VALUES (:title, :description, :date_start_plan, :date_end_plan, :time_plan, :author_id)";
-        return $this->db->executePreparedQuery($sql, $task_data);
+    public function add($task_data){
+        $sql = $this->builder
+                ->insert($this->tablename, $task_data)
+                ->getSql();
+        if ($this->db->executePreparedQuery($sql, $task_data)){
+            return "Task_new_success";
+        } else {
+            return "Task_new_fail";
+        }
     }
     
-    public function updateTask($task_data){
-        $sql = "UPDATE $this->tablename
-            SET title = :title, description = :description, date_start_plan = :date_start_plan, date_end_plan = :date_end_plan, time_plan = :time_plan, author_id=:author_id
-            WHERE task_id = :id";
-        return $this->db->executePreparedQuery($sql, $task_data);
+    public function save($task_data){
+        $sql = $this->builder
+                ->update($this->tablename, $task_data)
+                ->where()
+                ->equals('task_id')
+                ->getSql();
+        if($this->db->executePreparedQuery($sql, $task_data)){
+            return "Task_edit_success";
+        } else {
+            return "Task_edit_fail";
+        }
     }
 }

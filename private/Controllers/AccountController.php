@@ -56,8 +56,11 @@ class AccountController extends Controller
                 setcookie('login', $data['login'], time() + 3600 * 24 * 180);
                 setcookie('pwd', password_hash($data['password'], PASSWORD_DEFAULT), time()+3600 * 24 * 180);
             }
-            $this->session->set_session_var('login', $auth_data['login'] );
-            return new Response($this->model->auth_user($auth_data));
+            $result = $this->model->auth($auth_data);
+            if($result === 'Auth_success'){
+                $this->session->set_session_var('login', $auth_data['login'] );
+            }
+            return new Response($result);
         }
     }
 
@@ -71,15 +74,23 @@ class AccountController extends Controller
             ]);
         } else {
             $post = $this->request->post();
-            $user = new User($post['login'], 
-                            password_hash($post['password'], PASSWORD_DEFAULT),
-                            $post['email']);
+            
+            $user = new User();
+            $user->setLogin($post['login']);
+            $user->setHash(password_hash($post['password'], PASSWORD_DEFAULT));
+            $user->setEmail($post['email']);
+            
             $reg_data = [
                 'login'=>$user->getLogin(),
                 'hash'=>$user->getHash(),
                 'email'=>$user->getEmail()
             ];
-            return new Response($this->model->add_user($reg_data));
+            
+            $result = $this->model->add($reg_data);
+            if($result === 'Reg_success'){
+                $this->session->set_session_var('login', $reg_data['login'] );
+            }
+            return new Response($result);
         }
     }
 

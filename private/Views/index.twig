@@ -20,7 +20,7 @@
                         Создать аккаунт</a>
                     </li>
             </ul>
-            <form id="auth_form" class="form-inline my-2 my-lg-0">
+            <form id="auth_form" class="form-inline my-2 my-lg-0" action="/account/auth">
                 <input class="form-control form-group mr-sm-2" type="text" name="login" placeholder="Логин" aria-label="login">
                 <input class="form-control form-group mr-sm-2" type="password" name="password" placeholder="Пароль" aria-label="password">
                  <div class="form-group form-check">
@@ -48,7 +48,7 @@
 {% block scripts %}
     {{ parent()}}
     <script src="/js/auth.js"></script>
-    <script src="/js/reg.js"></script>
+
 {% endblock %}
 
 

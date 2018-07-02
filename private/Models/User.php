@@ -9,12 +9,6 @@ class User
     private $email;
     private $hash;
     
-    public function __construct($login, $hash, $email){
-        $this->setLogin($login)
-                ->setHash($hash)
-                ->setEmail($email);
-    }
-    
     public function setEmail($email){
          $this->email = $email;
          return $this;

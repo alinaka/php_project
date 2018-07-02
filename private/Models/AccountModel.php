@@ -1,47 +1,62 @@
 <?php
 namespace alina\project\Models;
 use alina\project\App\DB;
+use alina\project\App\QueryBuilder;
 
 class AccountModel
 {
     private $db;
     private $tablename = "User";
-
+    private $builder;
+    
     public function __construct(){
         $this->db = new DB();
+        $this->builder = new QueryBuilder();
     }
 
-    protected function is_user_registered($login){
-        $sql = "SELECT login FROM $this->tablename 
-            WHERE login=:login";
+    protected function is_registered($login){
+        $sql = $this->builder
+                ->select($this->tablename, ['login'])
+                ->where()
+                ->equals('login')
+                ->getSql();
         $params = [
             'login' => $login,
         ];
         return $this->db->fetchData($sql, $params);
     }
 
-    public function auth_user($auth_data){
-        if (!$this->is_user_registered($auth_data['login'])){
-            return 'wrong login';
+    public function auth($auth_data){
+        if (!$this->is_registered($auth_data['login'])){
+            return 'Auth_fail_login';
         }
         if (!$this->check_password($auth_data)){
-            return 'wrong pwd';
+            return 'Auth_fail_pwd';
         }
-        return 'success';
+        return 'Auth_success';
     }
 
-    public function add_user($reg_data){
-        if($this->is_user_registered($reg_data['login']) == false){
-            $sql = "INSERT INTO $this->tablename(login, hash, email) 
-                VALUES (:login, :hash, :email)";
-            return $this->db->executePreparedQuery($sql, $reg_data);
+    public function add($reg_data){
+        if($this->is_registered($reg_data['login']) == false){
+            $sql = $this->builder
+                    ->insert($this->tablename, $reg_data)
+                    ->getSql();
+            if ($this->db->executePreparedQuery($sql, $reg_data)){
+                return "Reg_success";
+            } else {
+                return "Reg_fail";
+            }
+        } else {
+            return "Reg_fail_user_exists";
         }
-        return 0;
     }
 
     protected function check_password($auth_data){
-        $sql = "SELECT hash FROM $this->tablename 
-            WHERE login=:login";
+        $sql = $this->builder
+               ->select($this->tablename, ['hash'])
+               ->where()
+               ->equals('login')
+               ->getSql();
         $params = [
             'login' => $auth_data['login'],
         ];
@@ -50,8 +65,11 @@ class AccountModel
     }
     
     public function get_userdata($login){
-        $sql = "SELECT * FROM $this->tablename 
-            WHERE login=:login";
+        $sql = $this->builder
+               ->select($this->tablename)
+               ->where()
+               ->equals('login')
+               ->getSql();
         $params = [
             'login' => $login
         ];
