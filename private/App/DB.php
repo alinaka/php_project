@@ -17,8 +17,10 @@ class DB
 	}
 
 	private function DBConnect(){
-		return new PDO("mysql:host=$this->server_name;dbname=$this->db_name",
+                $pdo = new PDO("mysql:host=$this->server_name;dbname=$this->db_name",
 							$this->username, $this->pwd);
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		return $pdo;
 	}
 
 	public function selectAllFromTable($sql_str){

@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    {% include 'nav.html.twig'%}
+    <section class="section row">
+        {% include 'aside.html.twig' %}    
+        <div class="wrapper mx-auto col-10">
+        {% block view %}{% endblock %}
+    </div>
+</section>
+{% endblock %}

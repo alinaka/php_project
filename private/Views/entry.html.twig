@@ -1,0 +1,19 @@
+{% extends "account_base.html.twig" %}
+
+{% block view %}
+    <h3>Время</h3>	
+    <form method="post" id="time_entry" action="/entry/register">
+        <input type="hidden" name="task_id" id="task_id" value="{{task_id}}"> 
+        <div class="form-group">
+            <label for="date_start_plan">Дата</label>
+            <input class="form-control" type="date" name="date_entry" id="date_entry"
+                   data-validation="date">
+        </div>
+        <div class="form-group">
+            <label for="date_end">Затраченное время</label>
+            <input class="form-control" type="time" name="time_entry" id="time_entry"
+                   data-validation="time">
+        </div>
+        <input type="submit" class="btn btn-primary btn-md" value="Записать время">
+    </form>
+{% endblock %}

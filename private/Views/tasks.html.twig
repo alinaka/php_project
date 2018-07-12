@@ -1,0 +1,34 @@
+{% extends "account_base.html.twig" %}
+
+{% block view %}
+    <h3 class="content__header">Мои задачи</h3>
+    <a class="btn btn-primary btn-md content__add_button" href="/task/add" role="button">Новая задача</a>
+    <table class="table">
+        <tr>
+            <th>Задача</th>
+            <th>Срок выполнения</th>
+            <th>Время факт</th>
+            <th>Время план</th>
+                {#<th>Ответственный</th>#}
+        </tr>
+        {% for item in data %}
+            <tr>
+                <td>
+                    <a href="/task/show/{{ item.task_id }}">{{ item.title }}</a>
+                    <a href="/entry/register/{{ item.task_id }}"><i class="fas fa-plus-circle"></i></a>
+                        {#                            <div class="chrono">
+                                                        <div class="startButton">
+                                                            <i class="fas fa-play-circle"></i>
+                                                        </div>
+                                                        <span id="esc" class="values">00:00:00</span>
+                                                        
+                                                    </div>#}
+                </td>
+                <td>{{ item.date_end_plan }}</td>
+                <td>{{ item.time_fact }}</td>
+                <td>{{ item.time_plan }}</td>
+                {#<td>{{ item.resp_id }}</td>#}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

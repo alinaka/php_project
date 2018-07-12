@@ -1,5 +1,5 @@
 body {
-	background-color: #f7f7f7;
+    background-color: #f7f7f7;
 }
 
 .fa-clock {
@@ -7,36 +7,36 @@ body {
 }
 
 .fab {
-	font-size: 25px;
+    font-size: 25px;
 }
 
 .fa-vk {
-	color: rgb(71, 71, 207);
+    color: rgb(71, 71, 207);
 }
 
 .fa-twitter {
-	color: rgb(59, 198, 199);
+    color: rgb(59, 198, 199);
 }
 
 .fa-facebook {
-	color: rgb(38, 38, 137);
+    color: rgb(38, 38, 137);
 }
 
 .fa-google-plus {
-	color: rgb(242, 51, 51);
+    color: rgb(242, 51, 51);
 }
 
 .fa-linkedin {
-	color: rgb(0, 123, 255);
+    color: rgb(0, 123, 255);
 }
 
 .logo {
-	margin-top: 20px;
+    margin-top: 20px;
 }
 
 .jumbotron {
-        background-color: white;
-            margin-top: 2rem;
+    background-color: white;
+    margin-top: 2rem;
 }
 
 .sign_link {
@@ -44,7 +44,6 @@ body {
 }
 
 .wrapper {
-    max-width: 500px;
     margin-top: 2rem;
     background-color: white;
     padding: 2rem 2rem;
@@ -57,37 +56,41 @@ body {
 }
 
 .content__header{
-	margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 .content__add_button{
-	    position: absolute;
+    position: absolute;
     right: 2rem;
     top: 1.5rem;
 }
 
 .content {
-	background-color: white;
+    background-color: white;
     padding-left: 3rem;
     padding-top: 1.5rem;
     border-radius: 10px;
 }
 
 .aside_nav__item_text {
-	padding-left: 10px;
+    padding-left: 10px;
     display: inline-block;
 }
 
 .navbar {
-	margin-top: 1.5rem;
+    margin-top: 1.5rem;
     margin-bottom: 1rem;
 }
 
 .footer-copyright {
-	color: grey;
-	font-size: 12px;
+    color: grey;
+    font-size: 12px;
 }
 
 .valid {
     border-color: green;
+}
+
+.avatar {
+    width: 250px;
 }

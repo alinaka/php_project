@@ -11,7 +11,7 @@ class QueryBuilder
  
     public function insert($tablename, $params){
     	$this->sql = "INSERT INTO " . $tablename;
-    	$this->sql .= " (`".implode("`, `", array_keys($params))."`)";
+    	$this->sql .= " (".implode(", ", array_keys($params)).")";
     	$this->sql .= " VALUES (:" . implode(", :", array_keys($params)).") ";
     	return $this;
     }
@@ -71,6 +71,21 @@ class QueryBuilder
         $this->sql = $this->equals($selfColumn, $refColumn)->getSql();
         return $this;
     }
+    
+    public function left_join(
+        $tablename,
+        $selfColumn = null,
+        $refColumn = null
+    ) {
+        $this->sql .= " LEFT JOIN $tablename ON";
+        $this->sql = $this->equals($selfColumn, $refColumn)->getSql();
+        return $this;
+    }
+    public function group_by($column) {
+	   $this->sql .= " GROUP BY $column";
+	   return $this;
+    }
+    
 }
 
 

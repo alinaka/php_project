@@ -43,7 +43,7 @@ class Response
     
     protected function sendHeaders(){
         if(headers_sent()){
-            return $this->headers;
+            return $this;
         }
         foreach ($this->headers as $name=>$val){
             header("$name:$val", false, $this->statusCode);
