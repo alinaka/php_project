@@ -85,3 +85,10 @@ body {
 .avatar {
     width: 250px;
 }
+.avatar_thumbnail {
+    width: 50px;
+}
+
+.disabled {
+    pointer-events: none;
+}

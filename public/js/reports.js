@@ -44,7 +44,7 @@ function get_data(){
         event.preventDefault();
 	var req = new XMLHttpRequest();
         var form_data = new FormData(this);
-	var path = 'report/getData/';
+	var path = "/report/getData";
         req.open("POST", path, true);
         req.send(form_data);
         

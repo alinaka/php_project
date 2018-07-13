@@ -5,7 +5,10 @@
     "license": "MIT",
     "minimum-stability": "dev",
     "require": {
-        "twig/twig": "^2.0"
+        "twig/twig": "^2.0",
+        "symfony/routing": "^4.2@dev",
+        "symfony/http-foundation": "^4.2@dev",
+        "symfony/http-kernel": "^4.2@dev"
     },
     "autoload": {
     	"psr-4": {

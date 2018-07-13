@@ -71,7 +71,7 @@ class TaskModel {
 //                . "ON Comment.user_id = Profile.profile_id "
 //                . "WHERE Comment.task_id = :task_id";
         $sql = $this->builder
-                ->select("Comment", ['comment_text', 'name', 'surname', 'avatar', 'date_create'])
+                ->select("Comment", ['comment_text', 'name', 'surname', 'avatar', 'date_create', 'comment_id'])
                 ->join("Profile", "Comment.user_id", "Profile.profile_id")
                 ->where()
                 ->equals("Comment.task_id", ":task_id")

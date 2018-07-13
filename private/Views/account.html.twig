@@ -2,11 +2,10 @@
 
 {% block view %}
     <h3>{{user.name }} {{ user.surname }}</h3>
-    <img class="avatar"" src="uploads/{{ user.avatar }}">
-    <p>{{ user.date_of_birth }}</p>
+    <img class="avatar" src="uploads/{{ user.avatar }}">
+    <p>{{ user.birthday|date("d.m.Y") }}</p>
     <p>{{ user.email }}</p>
-    <form method="post" action="account/downloadAvatar" id="avatar_form">
-                   
+    <form method="post" action="account/downloadAvatar" id="avatar_form">   
             <input class="form-control" type="file" name="avatar" id="avatar" 
                    data-validation-allowing="jpg, png, gif" 
                    data-validation="mime size" 

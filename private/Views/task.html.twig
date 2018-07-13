@@ -4,16 +4,10 @@
     <h3>{{ task.title }}</h3>
     <a class="btn btn-primary btn-md content__add_button" href="/task/edit/{{ task.task_id }}">Изменить</a>
     <p>Описание: {{ task.description }}</p>
-    <p>Дата создания: {{ task.date_create }}</p>
-    <p>Дата завершения: {{ task.date_end_plan }}</p>
+    <p>Время создания: {{ task.date_create|date("d.m.Y H:i:s")}}</p>
+    <p>Дата завершения: {{ task.date_end_plan|date("d.m.Y") }}</p>
     <p>Планируемое время выполнения: {{ task.time_plan }}</p> 
-    <h5>Комментарии</h5>
-    {% for comment in comments %}
-        <img src="img/{{ comment.avatar }}">
-        <p>{{ comment.name }} {{ comment.surname }}</p>
-        <p>{{ comment.comment_text }}</p>
-        <p>{{ comment.date_create }}</p>
-    {% endfor %}
+    {% include 'comments_block.html.twig' %}
     <form action="/comment/add">      
         <div class="form-group col-6">
             <textarea placeholder="Оставьте свой комментарий" name="comment_text" class="form-control" data-validation="length" data-validation-length="10-200"></textarea>  

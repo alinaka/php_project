@@ -49,7 +49,7 @@
                                                             
                                                         </div>#}
                         </td>
-                        <td>{{ task.date_end_plan }}</td>
+                        <td>{{ task.date_end_plan|date("d.m.Y")}}</td>
                         <td>{{ task.time_fact }}</td>
                         <td>{{ task.time_plan }}</td>
                         {#<td>{{ task.resp_id }}</td>#}
@@ -91,7 +91,7 @@
                                                             
                                                         </div>#}
                         </td>
-                        <td>{{ task.date_end_plan }}</td>
+                        <td>{{ task.date_end_plan|date("d.m.Y") }}</td>
                         <td>{{ task.time_fact }}</td>
                         <td>{{ task.time_plan }}</td>
                         {#<td>{{ task.resp_id }}</td>#}

@@ -1,0 +1,27 @@
+<div class="comments col-9">
+    <h5 class="title-comments">Комментарии ({{ comments|length }})</h5>
+    <ul class="media-list">
+        {% for comment in comments %}
+            <li class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object avatar_thumbnail" src="../../uploads/{{ comment.avatar }}" alt="...">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <div class="media-heading">
+                        <div class="author">{{ comment.name }} {{ comment.surname }}</div>
+                        <div class="metadata">
+                            <span class="date">{{ comment.date_create|date("d.m.Y H:i")}}</span>
+                        </div>
+                    </div>
+                    <div class="media-text text-justify">
+                        {{ comment.comment_text }}
+                    </div>
+                    <a href="../../comment/delete/{{comment.comment_id}}">Удалить</a>
+                    <hr>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

@@ -1,0 +1,79 @@
+{
+  "urls": {
+    "index": {
+      "path":"/",
+      "controller":"\\alina\\project\\Controllers\\IndexController::indexAction"
+    },
+    "tasks": {
+      "path":"/task",
+      "controller":"\\alina\\project\\Controllers\\TaskController::indexAction"
+    },
+    "task-show": {
+      "path":"/task/show/{id}",
+      "controller":"\\alina\\project\\Controllers\\TaskController::showAction"
+    },
+    "task-add": {
+      "path":"/task/add",
+      "controller":"\\alina\\project\\Controllers\\TaskController::addAction"
+    },
+    "task-edit": {
+      "path":"/task/edit/{id}",
+      "controller":"\\alina\\project\\Controllers\\TaskController::editAction"
+    },
+    "task-finish": {
+      "path":"/task/finish/{id}",
+      "controller":"\\alina\\project\\Controllers\\TaskController::finishAction"
+    },
+    "account-info": {
+      "path":"/account",
+      "controller":"\\alina\\project\\Controllers\\AccountController::indexAction"
+    },
+    "auth": {
+      "path":"/account/auth",
+      "controller":"\\alina\\project\\Controllers\\AccountController::authAction"
+    },
+    "registration": {
+      "path":"/account/registration",
+      "controller":"\\alina\\project\\Controllers\\AccountController::registrationAction"
+    },
+    "logout": {
+      "path":"/account/logout",
+      "controller":"\\alina\\project\\Controllers\\AccountController::logoutAction"
+    },
+    "download-avatar": {
+      "path":"/account/downloadAvatar",
+      "controller":"\\alina\\project\\Controllers\\AccountController::downloadAvatarAction"
+    },
+    "comment-add": {
+      "path":"/comment/add",
+      "controller":"\\alina\\project\\Controllers\\CommentController::addAction"
+    },
+    "comment-delete": {
+      "path":"/comment/delete/{get}",
+      "controller":"\\alina\\project\\Controllers\\CommentController::deleteAction"
+    },
+    "comment-update": {
+      "path":"/comment/update/{new_time}",
+      "controller":"\\alina\\project\\Controllers\\CommentController::updateAction"
+    },
+    "entry-register-form": {
+      "path":"/entry/register",
+      "controller":"\\alina\\project\\Controllers\\EntryController::registerAction"
+    },
+    "entry-register": {
+      "path":"/entry/register/{get}",
+      "controller":"\\alina\\project\\Controllers\\EntryController::registerAction"
+    },
+    "report-main": {
+      "path":"/report",
+      "controller":"\\alina\\project\\Controllers\\ReportController::indexAction"
+    },
+    "report-get-data": {
+      "path":"/report/getData",
+      "controller":"\\alina\\project\\Controllers\\ReportController::getDataAction"
+    }
+
+
+
+  }
+}

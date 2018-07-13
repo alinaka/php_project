@@ -17,8 +17,8 @@ class CommentModel {
     }
 
     public function addComment($comment_data) {
-        /*$sql = "INSERT INTO $this->tablename (comment_text, user_id, task_id) "
-                . "VALUES (:comment_text, :user_id, :task_id)";*/
+        /* $sql = "INSERT INTO $this->tablename (comment_text, user_id, task_id) "
+          . "VALUES (:comment_text, :user_id, :task_id)"; */
         $sql = $this->builder
                 ->insert($this->tablename, $comment_data)
                 ->getSql();
@@ -30,11 +30,11 @@ class CommentModel {
     }
 
     public function getNewComments($last_update) {
-        /*$sql = "SELECT comment_text, name, surname, avatar, date_create "
-                . "FROM Comment JOIN Profile "
-                . "ON Comment.user_id = Profile.profile_id "
-                . "WHERE Comment.task_id = 2 "
-                . "AND date_create >= :date_create";*/
+        /* $sql = "SELECT comment_text, name, surname, avatar, date_create "
+          . "FROM Comment JOIN Profile "
+          . "ON Comment.user_id = Profile.profile_id "
+          . "WHERE Comment.task_id = 2 "
+          . "AND date_create >= :date_create"; */
         $sql = $this->builder
                 ->select($this->tablename, ['comment_text', 'name', 'surname', 'avatar', 'date_create'])
                 ->join("Profile", "$this->tablename.user_id", "Profile.profile_id ")
@@ -48,4 +48,13 @@ class CommentModel {
         ];
         return $this->db->fetchAllData($sql, $params);
     }
+
+    public function delete($id) {
+        $sql = "DELETE FROM Comment WHERE comment_id=:comment_id";
+        $params = [
+            'comment_id' => $id
+        ];
+        return $this->db->executePreparedQuery($sql, $params);
+    }
+
 }

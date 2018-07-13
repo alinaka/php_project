@@ -3,7 +3,7 @@
 namespace alina\project\Controllers;
 
 use alina\project\App\Controller;
-use alina\project\App\Request;
+use Symfony\Component\HttpFoundation\Request;
 use alina\project\App\Response;
 use alina\project\App\Session;
 use alina\project\Models\AccountModel;
@@ -11,14 +11,14 @@ use alina\project\Models\AccountModel;
 class AccountController extends Controller {
 
     private $model;
-    private $reguest;
+    private $post;
     private $session;
 
     public function __construct() {
         parent::__construct();
         session_start();
         $this->model = new AccountModel();
-        $this->request = new Request();
+        $this->post = Request::createFromGlobals()->request;
         $this->session = new Session();
     }
 
@@ -46,14 +46,13 @@ class AccountController extends Controller {
             header('Location: /task');
             exit();
         } else {
-            $post = $this->request->post();
             $auth_data = [
-                'login' => $post['login'],
-                'password' => $post['password'],
+                'login' => $this->post->get('login'),
+                'password' => $this->post->get('password'),
             ];
-            if ($post['remember']) {
-                setcookie('login', $data['login'], time() + 3600 * 24 * 180);
-                setcookie('pwd', password_hash($data['password'], PASSWORD_DEFAULT), time() + 3600 * 24 * 180);
+            if ($this->post->get('remember')) {
+                setcookie('login', $auth_data['login'], time() + 3600 * 24 * 180);
+                setcookie('pwd', password_hash($auth_data['password'], PASSWORD_DEFAULT), time() + 3600 * 24 * 180);
             }
             $result = $this->model->auth($auth_data);
             if ($result === 'Auth_success') {
@@ -72,12 +71,10 @@ class AccountController extends Controller {
                 'Location' => '/task'
             ]);
         } else {
-            $post = $this->request->post();
-
             $reg_data = [
-                'login' => $post['login'],
-                'hash' => password_hash($post['password'], PASSWORD_DEFAULT),
-                'email' => $post['email']
+                'login' => $this->post->get('login'),
+                'hash' => password_hash($this->post->get('password'), PASSWORD_DEFAULT),
+                'email' => $this->post->get('email')
             ];
 
             $result = $this->model->add($reg_data);
