@@ -10,7 +10,7 @@ class ReportModel {
     private $db;
 
     public function __construct() {
-        $this->db = new DB();
+        $this->db = DB::getInstance();
         $this->builder = new QueryBuilder();
     }
 
