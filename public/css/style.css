@@ -2,7 +2,7 @@ body {
     background-color: #f7f7f7;
 }
 
-.fa-clock {
+.logo-icon {
     font-size: 50px;
 }
 
@@ -50,10 +50,6 @@ body {
     border-radius: .5rem;
     border: 1px solid rgba(0, 0, 0, 0.15);
 }
-.aside_nav__item{
-    font-size: 15px;
-    padding: 9px;
-}
 
 .content__header{
     margin-bottom: 1rem;
@@ -70,11 +66,6 @@ body {
     padding-left: 3rem;
     padding-top: 1.5rem;
     border-radius: 10px;
-}
-
-.aside_nav__item_text {
-    padding-left: 10px;
-    display: inline-block;
 }
 
 .navbar {

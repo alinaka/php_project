@@ -44,6 +44,21 @@
                    value="{{task.time_plan|slice(0,5)}}"
                    data-validation="time"> 
         </div>
+        <div class="form-group">
+            <label for="time_plan">Статус задачи</label>
+            <select name="status_id">
+                <option value="1"
+                        {% if task.status_id == 1 %}
+                            selected 
+                        {% endif %}>
+                    В работе</option>               
+                <option value="2"
+                        {% if task.status_id == 2 %}
+                            selected 
+                        {% endif %}>
+                    Завершена</option>
+            </select>
+        </div>
         <input type="submit" class="btn btn-primary btn-md" value="Сохранить изменения">
     </form>
 {% endblock %}

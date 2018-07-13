@@ -17,15 +17,6 @@ class TaskModel {
         $this->builder = new QueryBuilder();
     }
 
-    public function getAllTasks() {
-        $sql = $this->builder
-                ->select($this->tablename)
-                ->where()
-                ->equals('author_id', 1)
-                ->getSql();
-        return $this->db->selectAllFromTable($sql);
-    }
-
     public function getTaskById($id) {
         $sql = $this->builder
                 ->select($this->tablename)
@@ -44,7 +35,7 @@ class TaskModel {
         return $result;
     }
 
-    public function getEntries() {
+    public function getCurrentTasks() {
 //        $sql = "SELECT Task.task_id as task_id, title, date_end_plan, time_plan, SEC_TO_TIME(SUM(TIME_TO_SEC(time_entry))) as time_fact "
 //                . "FROM Task LEFT JOIN Entry "
 //                . "ON Task.task_id = Entry.task_id "
@@ -52,6 +43,23 @@ class TaskModel {
         $sql = $this->builder
                 ->select("Task", ['Task.task_id as task_id', 'title', 'date_end_plan', 'time_plan', 'SEC_TO_TIME(SUM(TIME_TO_SEC(time_entry))) as time_fact'])
                 ->left_join("Entry", "Task.task_id", "Entry.task_id")
+                ->where()
+                ->equals('status_id', 1)
+                ->group_by("Task.task_id")
+                ->getSql();
+        return $this->db->selectAllFromTable($sql);
+    }
+    
+    public function getFinishedTasks() {
+//        $sql = "SELECT Task.task_id as task_id, title, date_end_plan, time_plan, SEC_TO_TIME(SUM(TIME_TO_SEC(time_entry))) as time_fact "
+//                . "FROM Task LEFT JOIN Entry "
+//                . "ON Task.task_id = Entry.task_id "
+//                . "GROUP BY Task.task_id";
+        $sql = $this->builder
+                ->select("Task", ['Task.task_id as task_id', 'title', 'date_end_plan', 'time_plan', 'SEC_TO_TIME(SUM(TIME_TO_SEC(time_entry))) as time_fact'])
+                ->left_join("Entry", "Task.task_id", "Entry.task_id")
+                ->where()
+                ->equals('status_id', 2)
                 ->group_by("Task.task_id")
                 ->getSql();
         return $this->db->selectAllFromTable($sql);
@@ -109,4 +117,11 @@ class TaskModel {
         }
     }
 
+    public function finish($id){
+        $sql = "UPDATE Task SET status_id = 2 WHERE task_id=:task_id";
+        $params = [
+            'task_id' => $id
+        ];
+        return $this->db->executePreparedQuery($sql, $params);
+    }
 }

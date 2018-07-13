@@ -3,32 +3,104 @@
 {% block view %}
     <h3 class="content__header">Мои задачи</h3>
     <a class="btn btn-primary btn-md content__add_button" href="/task/add" role="button">Новая задача</a>
-    <table class="table">
-        <tr>
-            <th>Задача</th>
-            <th>Срок выполнения</th>
-            <th>Время факт</th>
-            <th>Время план</th>
-                {#<th>Ответственный</th>#}
-        </tr>
-        {% for item in data %}
-            <tr>
-                <td>
-                    <a href="/task/show/{{ item.task_id }}">{{ item.title }}</a>
-                    <a href="/entry/register/{{ item.task_id }}"><i class="fas fa-plus-circle"></i></a>
-                        {#                            <div class="chrono">
-                                                        <div class="startButton">
-                                                            <i class="fas fa-play-circle"></i>
-                                                        </div>
-                                                        <span id="esc" class="values">00:00:00</span>
-                                                        
-                                                    </div>#}
-                </td>
-                <td>{{ item.date_end_plan }}</td>
-                <td>{{ item.time_fact }}</td>
-                <td>{{ item.time_plan }}</td>
-                {#<td>{{ item.resp_id }}</td>#}
-            </tr>
-        {% endfor %}
-    </table>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="current_tasks" data-toggle="tab" href="#current" role="tab" aria-controls="current" aria-selected="true">Текущие</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="finished_tasks" data-toggle="tab" href="#finished" role="tab" aria-controls="finished" aria-selected="false">Завершенные</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="current" role="tabpanel" aria-labelledby="current_tasks">
+            <table class="table">
+                <tr>
+                    <th>Задача</th>
+                    <th>Срок выполнения</th>
+                    <th>Время факт</th>
+                    <th>Время план</th>
+                        {#<th>Ответственный</th>#}
+                </tr>
+                {% for task in data %}
+                    <tr>
+                        <td>
+                            <div class="dropdown">
+                                <a class="btn btn-link dropdown-toggle"         
+                                   role="button" 
+                                   id="dropdownMenuLink" 
+                                   data-toggle="dropdown" 
+                                   aria-haspopup="true" 
+                                   aria-expanded="false">
+                                    {{ task.title }}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="/task/show/{{ task.task_id }}">Открыть</a>
+                                    <a class="dropdown-item" href="/task/edit/{{ task.task_id }}">Изменить</a>
+                                    <a class="dropdown-item" href="/entry/register/{{ task.task_id }}">Зарегистрировать время</a>                           
+                                    <a class="dropdown-item" href="/task/finish/{{ task.task_id }}">Завершить</a>
+                                </div>
+                                {% if task.date_end_plan < "now"|date("Y-m-d") %}<span class="badge badge-pill badge-danger">просрочена</span>{% endif %}
+                            </div>                   
+                            {#                            <div class="chrono">
+                                                            <div class="startButton">
+                                                                <i class="fas fa-play-circle"></i>
+                                                            </div>
+                                                            <span id="esc" class="values">00:00:00</span>
+                                                            
+                                                        </div>#}
+                        </td>
+                        <td>{{ task.date_end_plan }}</td>
+                        <td>{{ task.time_fact }}</td>
+                        <td>{{ task.time_plan }}</td>
+                        {#<td>{{ task.resp_id }}</td>#}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="tab-pane fade" id="finished" role="tabpanel" aria-labelledby="finished_tasks">
+            <table class="table">
+                <tr>
+                    <th>Задача</th>
+                    <th>Срок выполнения</th>
+                    <th>Время факт</th>
+                    <th>Время план</th>
+                        {#<th>Ответственный</th>#}
+                </tr>
+                {% for task in finished_tasks %}
+                    <tr>
+                        <td>
+                            <div class="dropdown">
+                                <a class="btn btn-link dropdown-toggle"         
+                                   role="button" 
+                                   id="dropdownMenuLink" 
+                                   data-toggle="dropdown" 
+                                   aria-haspopup="true" 
+                                   aria-expanded="false">
+                                    {{ task.title }}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="/task/show/{{ task.task_id }}">Открыть</a>
+                                    <a class="dropdown-item" href="/task/edit/{{ task.task_id }}">Изменить</a>                          
+                                </div>
+                            </div>                   
+                            {#                            <div class="chrono">
+                                                            <div class="startButton">
+                                                                <i class="fas fa-play-circle"></i>
+                                                            </div>
+                                                            <span id="esc" class="values">00:00:00</span>
+                                                            
+                                                        </div>#}
+                        </td>
+                        <td>{{ task.date_end_plan }}</td>
+                        <td>{{ task.time_fact }}</td>
+                        <td>{{ task.time_plan }}</td>
+                        {#<td>{{ task.resp_id }}</td>#}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+
 {% endblock %}
+

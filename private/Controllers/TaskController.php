@@ -81,7 +81,8 @@ class TaskController extends Controller {
                     'description' => $post['description'],
                     'date_start_plan' => $post['date_start_plan'],
                     'date_end_plan' => $post['date_end_plan'],
-                    'time_plan' => $post['time_plan']
+                    'time_plan' => $post['time_plan'],
+                    'status_id'=>$post['status_id']
                 ];
                 return new Response($this->model->save($task_data));
             } else {
@@ -107,12 +108,14 @@ class TaskController extends Controller {
             $this->session->set_session_var('login', $_COOKIE['login']);
         }
         if ($this->session->is_session_var('login')) {
-            $data = $this->model->getEntries();
+            $current_tasks = $this->model->getCurrentTasks();
+            $finished_tasks = $this->model->getFinishedTasks();
             $view = 'tasks.html.twig';
             $title = 'Личная страница';
             return new Response($this->generateView($view, [
                         'page_title' => $title,
-                        'data' => $data,
+                        'data' => $current_tasks,
+                        'finished_tasks' => $finished_tasks,
                         'login' => $this->session->get_session_var('login'),
             ]));
         } else {
@@ -121,6 +124,23 @@ class TaskController extends Controller {
             ]);
         }
     }
+    
+    public function finishAction($get){
+        if (isset($_COOKIE['login'])) {
+            $this->session->set_session_var('login', $_COOKIE['login']);
+        }
+        if ($this->session->is_session_var('login')) {
+            $this->model->finish($get);
+            return new Response('', [
+                'Location' => '/task'
+            ]);
+        } else {
+            return new Response('', [
+                'Location' => '/'
+            ]);
+        }
+    }
+    
 
     /* public function fileAction() {
       $uploaddir = '../uploads/';
