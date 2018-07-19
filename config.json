@@ -28,6 +28,10 @@
             "path": "/account",
             "controller": "\\alina\\project\\Controllers\\AccountController::indexAction"
         },
+        "check-login": {
+            "path": "/account/check_login",
+            "controller": "\\alina\\project\\Controllers\\AccountController::check_loginAction"
+        },
         "auth": {
             "path": "/account/auth",
             "controller": "\\alina\\project\\Controllers\\AccountController::authAction"
@@ -49,7 +53,7 @@
             "controller": "\\alina\\project\\Controllers\\CommentController::addAction"
         },
         "comment-delete": {
-            "path": "/comment/delete/{get}",
+            "path": "/comment/delete",
             "controller": "\\alina\\project\\Controllers\\CommentController::deleteAction"
         },
         "comment-update": {
@@ -61,8 +65,16 @@
             "controller": "\\alina\\project\\Controllers\\EntryController::registerAction"
         },
         "entry-register": {
-            "path": "/entry/register/{get}",
+            "path": "/entry/register/{id}",
             "controller": "\\alina\\project\\Controllers\\EntryController::registerAction"
+        },
+        "entry-delete": {
+            "path": "/entry/delete",
+            "controller": "\\alina\\project\\Controllers\\EntryController::deleteAction"
+        },
+        "entry-edit": {
+            "path": "/entry/edit/{id}",
+            "controller": "\\alina\\project\\Controllers\\EntryController::editAction"
         },
         "report-main": {
             "path": "/report",

@@ -27,10 +27,12 @@ class TaskController extends Controller {
             $view = 'task.html.twig';
             $title = 'Задача';
             $task = $this->model->getTaskById($id);
+            $entries = $this->model->getEntriesById($id);
             $comments = $this->model->getCommentsById($id);
             return new Response($this->generateView($view, [
                         'page_title' => $title,
                         'task' => $task,
+                        'entries'=>$entries,
                         'login' => $this->session->get_session_var('login'),
                         'comments' => $comments
             ]));

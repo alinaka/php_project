@@ -18,7 +18,10 @@
                     <div class="media-text text-justify">
                         {{ comment.comment_text }}
                     </div>
-                    <a href="../../comment/delete/{{comment.comment_id}}">Удалить</a>
+                    <form action="/comment/delete">
+                        <input type="hidden" name="comment_id" value="{{comment.comment_id}}">
+                        <input type="submit" value="Удалить">
+                    </form>
                     <hr>
                 </div>
             </li>

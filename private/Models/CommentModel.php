@@ -5,6 +5,8 @@ namespace alina\project\Models;
 use alina\project\App\DB;
 use alina\project\App\QueryBuilder;
 
+require_once('server_response.php');
+
 class CommentModel {
 
     private $db;
@@ -23,10 +25,14 @@ class CommentModel {
                 ->insert($this->tablename, $comment_data)
                 ->getSql();
         if ($this->db->executePreparedQuery($sql, $comment_data)) {
-            return "Comment_success";
+            $response = json_encode([
+                'msg' => COMMENT_SUCCESS,
+                'modal' => true,
+            ]);
         } else {
-            return "Comment_new_fail";
+            $response = DB_FAIL;
         }
+        return $response;
     }
 
     public function getNewComments($last_update) {
@@ -54,7 +60,15 @@ class CommentModel {
         $params = [
             'comment_id' => $id
         ];
-        return $this->db->executePreparedQuery($sql, $params);
+        if ($this->db->executePreparedQuery($sql, $params)) {
+            $response = json_encode([
+                'msg' => COMMENT_DELETE_SUCCESS,
+                'modal' => true,
+            ]);
+        } else {
+            $response = DB_FAIL;
+        }
+        return $response;
     }
 
 }

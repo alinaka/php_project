@@ -1,18 +1,66 @@
 {% extends "account_base.html.twig" %}
 
 {% block view %}
+    <p>
+        <a href="/task">Мои задачи</a>
+        <i class="fas fa-arrow-circle-right"></i>
+        <a href="/task/show/{{ task.task_id }}">{{ task.title }}</a>
+    </p>
     <h3>{{ task.title }}</h3>
     <a class="btn btn-primary btn-md content__add_button" href="/task/edit/{{ task.task_id }}">Изменить</a>
-    <p>Описание: {{ task.description }}</p>
-    <p>Время создания: {{ task.date_create|date("d.m.Y H:i:s")}}</p>
-    <p>Дата завершения: {{ task.date_end_plan|date("d.m.Y") }}</p>
-    <p>Планируемое время выполнения: {{ task.time_plan }}</p> 
-    {% include 'comments_block.html.twig' %}
-    <form action="/comment/add">      
-        <div class="form-group col-6">
-            <textarea placeholder="Оставьте свой комментарий" name="comment_text" class="form-control" data-validation="length" data-validation-length="10-200"></textarea>  
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="general_tab" data-toggle="tab" href="#general_info" role="tab" aria-controls="general_info" aria-selected="true">Общая информация</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="entries_tab" data-toggle="tab" href="#entries" role="tab" aria-controls="entries" aria-selected="false">Учет времени</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="general_info" role="tabpanel" aria-labelledby="general_info">
+            <p>Описание: {{ task.description }}</p>
+            <p>Время создания: {{ task.date_create|date("d.m.Y H:i:s")}}</p>
+            <p>Дата завершения: {{ task.date_end_plan|date("d.m.Y") }}</p>
+            <p>Планируемое время выполнения: {{ task.time_plan }}</p>
+            <a class="btn btn-secondary" href="/entry/register/{{ task.task_id }}">Зарегистрировать время</a> 
+            {% include 'comments_block.html.twig' %}
+            <form action="/comment/add">      
+                <div class="form-group col-6">
+                    <textarea placeholder="Оставьте свой комментарий" name="comment_text" class="form-control" data-validation="length" data-validation-length="10-200"></textarea>  
+                </div>
+                <input type="hidden" name="task_id" value="{{ task.task_id }}">
+                <input type="submit" value="Отправить" class="btn btn-primary">     
+            </form>
         </div>
-        <input type="hidden" name="task_id" value="{{ task.task_id }}">
-        <input type="submit" value="Отправить" class="btn btn-primary">     
-    </form>
+        <div class="tab-pane fade" id="entries" role="tabpanel" aria-labelledby="entries">
+            <table class="table">
+                <tr>
+                    <th>Дата</th>
+                    <th>Время</th>
+                    <th>Дата создания</th>
+                    <th>Действия</th>
+                        {#<th>Ответственный</th>#}
+                </tr>
+                {% for entry in entries %}
+                    <tr>
+                        <td>
+                            {{ entry.date_entry|date("d.m.Y")}}
+                        </td>
+                        <td>{{ entry.time_entry }}</td>
+                        <td>{{ entry.date_create|date("d.m.Y H:i:s")}}</td>
+                        <td>
+                            <a href="/entry/edit/{{ entry.entry_id }}">Редактировать запись</a>
+                            <form action="/entry/delete">
+                                <input type="hidden" name="entry_id" value="{{entry.entry_id}}">
+                                <input type="hidden" name="task_id" value="{{task.task_id}}">
+                                <input type="submit" value="Удалить">
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
 {% endblock %}

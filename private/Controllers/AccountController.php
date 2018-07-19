@@ -38,6 +38,26 @@ class AccountController extends Controller {
         }
     }
 
+    public function check_loginAction() {
+        $response = array(
+            'valid' => false,
+            'message' => 'Поле Логин не заполнено'
+        );
+        $username = $this->post->get('login');
+        if ($username) {
+            $user = $this->model->is_registered($username);
+
+            if ($user) {
+                // User name is registered on another account
+                $response = array('valid' => false, 'message' => 'Пользователь с таким логином уже существует');
+            } else {
+                // User name is available
+                $response = array('valid' => true);
+            }
+        }
+        return new Response(json_encode($response)) ;
+    }
+
     public function authAction() {
         if (isset($_COOKIE['login'])) {
             $this->session->set_session_var('login', $_COOKIE['login']);
@@ -57,6 +77,9 @@ class AccountController extends Controller {
             $result = $this->model->auth($auth_data);
             if ($result === 'Auth_success') {
                 $this->session->set_session_var('login', $auth_data['login']);
+                $result = json_encode([
+                    'path' => "/task"
+                ]);
             }
             return new Response($result);
         }
@@ -76,9 +99,9 @@ class AccountController extends Controller {
                 'hash' => password_hash($this->post->get('password'), PASSWORD_DEFAULT),
                 'email' => $this->post->get('email')
             ];
-
             $result = $this->model->add($reg_data);
-            if ($result === 'Reg_success') {
+            $auth = json_decode($result);
+            if ($auth->msg === REG_SUCCESS) {
                 $this->session->set_session_var('login', $reg_data['login']);
             }
             return new Response($result);
@@ -102,13 +125,13 @@ class AccountController extends Controller {
         //echo '<pre>';
         if (move_uploaded_file($_FILES['avatar']['tmp_name'], $uploadfile)) {
             $userdata = $this->model->get_userdata($this->session->get_session_var('login'));
-            
+
             $data = [
-                'avatar'=>$filename,
-                'user_id'=>$userdata['user_id'],
+                'avatar' => $filename,
+                'user_id' => $userdata['user_id'],
             ];
             return new Response($this->model->saveAvatar($data));
-            
+
             //echo "Файл корректен и был успешно загружен.\n";
         } else {
             //echo "Возможная атака с помощью файловой загрузки!\n";
@@ -116,7 +139,6 @@ class AccountController extends Controller {
 
         //echo 'Некоторая отладочная информация:';
         //print_r($_FILES);
-
         //print "</pre>";
     }
 

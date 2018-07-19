@@ -44,15 +44,13 @@ class CommentController extends Controller {
         return new Response($response);
     }
 
-    public function deleteAction($get) {
+    public function deleteAction() {
         if (isset($_COOKIE['login'])) {
             $this->session->set_session_var('login', $_COOKIE['login']);
         }
         if ($this->session->is_session_var('login')) {
-            $this->model->delete($get);
-            return new Response('', [
-                'Location' => '/'
-            ]);
+            $id = $this->post->get('comment_id');
+            return new Response($this->model->delete($id));
         } else {
             return new Response('', [
                 'Location' => '/'

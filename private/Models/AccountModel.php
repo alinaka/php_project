@@ -5,6 +5,8 @@ namespace alina\project\Models;
 use alina\project\App\DB;
 use alina\project\App\QueryBuilder;
 
+require_once('server_response.php');
+
 class AccountModel {
 
     private $db;
@@ -16,7 +18,7 @@ class AccountModel {
         $this->builder = new QueryBuilder();
     }
 
-    protected function is_registered($login) {
+    public function is_registered($login) {
         $sql = $this->builder
                 ->select($this->tablename, ['login'])
                 ->where()
@@ -30,10 +32,10 @@ class AccountModel {
 
     public function auth($auth_data) {
         if (!$this->is_registered($auth_data['login'])) {
-            return 'Auth_fail_login';
+            return AUTH_FAIL_LOGIN;
         }
         if (!$this->check_password($auth_data)) {
-            return 'Auth_fail_pwd';
+            return AUTH_FAIL_PWD;
         }
         return 'Auth_success';
     }
@@ -44,12 +46,17 @@ class AccountModel {
                     ->insert($this->tablename, $reg_data)
                     ->getSql();
             if ($this->db->executePreparedQuery($sql, $reg_data)) {
-                return "Reg_success";
+                $response = [
+                    'msg'=>REG_SUCCESS,
+                    'modal'=>true,
+                    'path'=>'/task'
+                ];
+                return json_encode($response);
             } else {
-                return "Reg_fail";
+                return DB_FAIL;
             }
         } else {
-            return "Reg_fail_user_exists";
+            return USER_EXISTS;
         }
     }
 
@@ -82,9 +89,9 @@ class AccountModel {
     public function saveAvatar($data){
         $sql = "UPDATE Profile SET avatar=:avatar WHERE user_id=:user_id";
         if ($this->db->executePreparedQuery($sql, $data)) {
-            return "Avatar_success";
+            return AVATAR_SUCCESS;
         } else {
-            return "Avatar_fail";
+            return DB_FAIL;
         }
     }
 }

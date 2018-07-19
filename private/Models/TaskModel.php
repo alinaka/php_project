@@ -6,6 +6,7 @@ use alina\project\App\DB;
 use alina\project\App\QueryBuilder;
 //use alina\project\App\Handler;
 use alina\project\App\HttpException;
+require_once('server_response.php');
 
 class TaskModel {
 
@@ -49,7 +50,15 @@ class TaskModel {
                 ->getSql();
         return $this->db->selectAllFromTable($sql);
     }
-    
+
+    public function getEntriesById($id) {
+        $sql = "SELECT * FROM Entry WHERE task_id=:task_id ORDER BY date_entry DESC";
+        $params = [
+            'task_id' => $id
+        ];
+        return $this->db->fetchAllData($sql, $params);
+    }
+
     public function getFinishedTasks() {
 //        $sql = "SELECT Task.task_id as task_id, title, date_end_plan, time_plan, SEC_TO_TIME(SUM(TIME_TO_SEC(time_entry))) as time_fact "
 //                . "FROM Task LEFT JOIN Entry "
@@ -87,9 +96,14 @@ class TaskModel {
                 ->insert($this->tablename, $task_data)
                 ->getSql();
         if ($this->db->executePreparedQuery($sql, $task_data)) {
-            return "Task_new_success";
+            $response = [
+                'msg' => TASK_NEW_SUCCESS,
+                'modal'=>true,
+                'path'=>'/task'
+            ];
+            return json_encode($response);
         } else {
-            return "Task_new_fail";
+            return DB_FAIL;
         }
     }
 
@@ -98,9 +112,14 @@ class TaskModel {
                 ->insert("Entry", $task_data)
                 ->getSql();
         if ($this->db->executePreparedQuery($sql, $task_data)) {
-            return "Entry_new_success";
+            $response = [
+                'msg' => ENTRY_NEW_SUCCESS,
+                'modal'=>true,
+                'path'=>'/task'
+            ];
+            return json_encode($response);
         } else {
-            return "Entry_new_fail";
+            return DB_FAIL;
         }
     }
 
@@ -111,17 +130,23 @@ class TaskModel {
                 ->equals("$this->tablename.task_id", ":task_id")
                 ->getSql();
         if ($this->db->executePreparedQuery($sql, $task_data)) {
-            return "Task_edit_success";
+            $response = [
+                'msg' => EDIT_SUCCESS,
+                'modal'=>true,
+                'path'=>'/task'
+            ];
+            return json_encode($response);
         } else {
-            return "Task_edit_fail";
+            return DB_FAIL;
         }
     }
 
-    public function finish($id){
+    public function finish($id) {
         $sql = "UPDATE Task SET status_id = 2 WHERE task_id=:task_id";
         $params = [
             'task_id' => $id
         ];
         return $this->db->executePreparedQuery($sql, $params);
     }
+
 }
