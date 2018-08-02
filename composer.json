@@ -9,11 +9,15 @@
         "symfony/routing": "^4.2@dev",
         "symfony/http-foundation": "^4.2@dev",
         "symfony/http-kernel": "^4.2@dev",
-        "doctrine/orm": "2.4.*"
+        "symfony/orm-pack": "dev-master",
+        "symfony/console": "^4.2@dev"
     },
     "autoload": {
     	"psr-4": {
     		"alina\\project\\": "private/"
     	}
+    },
+    "require-dev": {
+        "symfony/maker-bundle": "^1.0@dev"
     }
 }

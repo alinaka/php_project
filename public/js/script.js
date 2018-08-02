@@ -37,7 +37,11 @@ function r_handler(response) {
                 }
             });
         } else {
-            window.location.href = data.path;
+            if (!data.path) {
+                location.href = location.href;
+            } else {
+                window.location.href = data.path;
+            }
         }
     } catch (e) {
         $('#result_modal').modal();
@@ -49,20 +53,20 @@ function r_handler(response) {
 function sendForm(event) {
     event.preventDefault();
 
-        var form_data = new FormData(this);
+    var form_data = new FormData(this);
 
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", this.action, true);
-        xhr.send(form_data);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", this.action, true);
+    xhr.send(form_data);
 
-        xhr.onload = function (oEvent) {
-            if (xhr.status == 200) {
-                console.log("Ok!", xhr.responseText);
-                r_handler(xhr.responseText);
-            } else {
-                console.log("error!");
-            }
-        };
+    xhr.onload = function (oEvent) {
+        if (xhr.status == 200) {
+            console.log("Ok!", xhr.responseText);
+            r_handler(xhr.responseText);
+        } else {
+            console.log("error!");
+        }
+    };
 
 }
 

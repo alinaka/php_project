@@ -2,9 +2,9 @@
 
 namespace alina\project\Controllers;
 
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Response;
 use alina\project\App\Controller;
-use alina\project\App\Session;
-use alina\project\App\Response;
 
 class IndexController extends Controller {
 
@@ -12,13 +12,13 @@ class IndexController extends Controller {
 
     public function __construct() {
         parent::__construct();
-        session_start();
         $this->session = new Session();
+        $this->session->start();
     }
 
     public function indexAction() {
-        if ($this->session->is_session_var('login')) {
-            return new Response('', [
+        if ($this->session->has('login')) {
+            return new Response('', 200, [
                 'Location' => '/task'
             ]);
         } else {

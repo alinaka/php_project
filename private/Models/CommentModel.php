@@ -27,7 +27,7 @@ class CommentModel {
         if ($this->db->executePreparedQuery($sql, $comment_data)) {
             $response = json_encode([
                 'msg' => COMMENT_SUCCESS,
-                'modal' => true,
+                'modal' =>false
             ]);
         } else {
             $response = DB_FAIL;
@@ -63,7 +63,7 @@ class CommentModel {
         if ($this->db->executePreparedQuery($sql, $params)) {
             $response = json_encode([
                 'msg' => COMMENT_DELETE_SUCCESS,
-                'modal' => true,
+                'modal' => false,
             ]);
         } else {
             $response = DB_FAIL;

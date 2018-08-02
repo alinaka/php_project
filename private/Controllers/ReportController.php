@@ -1,9 +1,11 @@
 <?php
 namespace alina\project\Controllers;
-use alina\project\App\Controller;
-use alina\project\App\Session;
+
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
-use alina\project\App\Response;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use alina\project\App\Controller;
 use alina\project\Models\ReportModel;
 
 class ReportController extends Controller
@@ -14,9 +16,9 @@ class ReportController extends Controller
     
     public function __construct(){
         parent::__construct();
-        session_start();
         $this->model = new ReportModel();
         $this->session = new Session();
+        $this->session->start();
         $this->post = Request::createFromGlobals()->request;
     }
     
@@ -34,12 +36,11 @@ class ReportController extends Controller
         $from = $this->post->get('from');
         $to = $this->post->get('to');
         if($this->post->get('report_on') == 'general'){    
-            $tasks = json_encode($this->model->getAllTime($from, $to));
-            return new Response($tasks);
+            $tasks = $this->model->getAllTime($from, $to);           
         } else {
             $id = $this->post->get('report_on');
-            $tasks = json_encode($this->model->getTimeOnTask($id, $from, $to));
-            return new Response($tasks);
+            $tasks = $this->model->getTimeOnTask($id, $from, $to);
         }
+        return new JsonResponse($tasks);
     }
 }

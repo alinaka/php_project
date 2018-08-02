@@ -2,11 +2,11 @@
 
 namespace alina\project\Controllers;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use alina\project\App\Controller;
 use alina\project\Models\EntryModel;
-use alina\project\App\Session;
-use Symfony\Component\HttpFoundation\Request;
-use alina\project\App\Response;
 use alina\project\Models\TaskModel;
 
 class EntryController extends Controller {
@@ -17,14 +17,14 @@ class EntryController extends Controller {
 
     public function __construct() {
         parent::__construct();
-        session_start();
         $this->model = new EntryModel();
         $this->session = new Session();
+        $this->session->start();
         $this->post = Request::createFromGlobals()->request;
     }
 
     public function registerAction($id) {
-        if ($this->session->is_session_var('login')) {
+        if ($this->session->has('login')) {
             if (count($this->post) > 0) {
                 $task_data = [
                     'task_id' => $this->post->get('task_id'),
@@ -38,13 +38,13 @@ class EntryController extends Controller {
                 $view = 'entry.html.twig';
                 $title = 'Регистрация времени';
                 return new Response($this->generateView($view, [
-                            'task' => $task,
                             'page_title' => $title,
+                            'task' => $task,
                             'login' => $this->session->get_session_var('login'),
                 ]));
             }
         } else {
-            return new Response('', [
+            return new Response('', 200, [
                 'Location' => '/'
             ]);
         }
@@ -52,21 +52,21 @@ class EntryController extends Controller {
 
     public function deleteAction() {
         if (isset($_COOKIE['login'])) {
-            $this->session->set_session_var('login', $_COOKIE['login']);
+            $this->session->set('login', $_COOKIE['login']);
         }
-        if ($this->session->is_session_var('login')) {
+        if ($this->session->has('login')) {
             $id = $this->post->get('entry_id');
             $task_id = $this->post->get('task_id');
             return new Response($this->model->delete($id, $task_id));
         } else {
-            return new Response('', [
+            return new Response('', 200, [
                 'Location' => '/'
             ]);
         }
     }
 
     public function editAction($id) {
-        if ($this->session->is_session_var('login')) {
+        if ($this->session->has('login')) {
             if (count($this->post) > 0) {
                 $entry_data = [
                     'task_id' => $this->post->get('task_id'),
@@ -89,7 +89,7 @@ class EntryController extends Controller {
                 ]));
             }
         } else {
-            return new Response('', [
+            return new Response('', 200, [
                 'Location' => '/'
             ]);
         }

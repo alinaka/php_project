@@ -2,11 +2,11 @@
 
 namespace alina\project\Controllers;
 
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use alina\project\App\Controller;
 use alina\project\Models\TaskModel;
-use alina\project\App\Session;
-use Symfony\Component\HttpFoundation\Request;
-use alina\project\App\Response;
 
 class TaskController extends Controller {
 
@@ -16,14 +16,14 @@ class TaskController extends Controller {
 
     public function __construct() {
         parent::__construct();
-        session_start();
         $this->model = new TaskModel();
         $this->session = new Session();
+        $this->session->start();
         $this->post = Request::createFromGlobals()->request;
     }
 
     public function showAction($id) {
-        if ($this->session->is_session_var('login')) {
+        if ($this->session->has('login')) {
             $view = 'task.html.twig';
             $title = 'Задача';
             $task = $this->model->getTaskById($id);
@@ -33,18 +33,18 @@ class TaskController extends Controller {
                         'page_title' => $title,
                         'task' => $task,
                         'entries'=>$entries,
-                        'login' => $this->session->get_session_var('login'),
+                        'login' => $this->session->get('login'),
                         'comments' => $comments
             ]));
         } else {
-            return new Response('', [
+            return new Response('', 200, [
                 'Location' => '/'
             ]);
         }
     }
 
     public function addAction() {
-        if ($this->session->is_session_var('login')) {
+        if ($this->session->has('login')) {
             if (count($this->post) > 0) {
                 $task_data = [
                     'title' => $this->post->get('title'),
@@ -61,18 +61,18 @@ class TaskController extends Controller {
                 $title = 'Добавление задачи';
                 return new Response($this->generateView($view, [
                             'page_title' => $title,
-                            'login' => $this->session->get_session_var('login'),
+                            'login' => $this->session->get('login'),
                 ]));
             }
         } else {
-            return new Response('', [
+            return new Response('', 200, [
                 'Location' => '/'
             ]);
         }
     }
 
     public function editAction($id) {
-        if ($this->session->is_session_var('login')) {
+        if ($this->session->has('login')) {
             if (count($this->post) > 0) {
                 $task_data = [
                     'task_id' => $this->post->get('task_id'),
@@ -91,11 +91,11 @@ class TaskController extends Controller {
                 return new Response($this->generateView($view, [
                             'page_title' => $title,
                             'task' => $task,
-                            'login' => $this->session->get_session_var('login'),
+                            'login' => $this->session->get('login'),
                 ]));
             }
         } else {
-            return new Response('', [
+            return new Response('', 200, [
                 'Location' => '/'
             ]);
         }
@@ -103,9 +103,9 @@ class TaskController extends Controller {
 
     public function indexAction() {
         if (isset($_COOKIE['login'])) {
-            $this->session->set_session_var('login', $_COOKIE['login']);
+            $this->session->set('login', $_COOKIE['login']);
         }
-        if ($this->session->is_session_var('login')) {
+        if ($this->session->has('login')) {
             $current_tasks = $this->model->getCurrentTasks();
             $finished_tasks = $this->model->getFinishedTasks();
             $view = 'tasks.html.twig';
@@ -114,10 +114,10 @@ class TaskController extends Controller {
                         'page_title' => $title,
                         'data' => $current_tasks,
                         'finished_tasks' => $finished_tasks,
-                        'login' => $this->session->get_session_var('login'),
+                        'login' => $this->session->get('login'),
             ]));
         } else {
-            return new Response('', [
+            return new Response('', 200, [
                 'Location' => '/'
             ]);
         }
@@ -125,15 +125,15 @@ class TaskController extends Controller {
     
     public function finishAction($id){
         if (isset($_COOKIE['login'])) {
-            $this->session->set_session_var('login', $_COOKIE['login']);
+            $this->session->set('login', $_COOKIE['login']);
         }
-        if ($this->session->is_session_var('login')) {
+        if ($this->session->has('login')) {
             $this->model->finish($id);
-            return new Response('', [
+            return new Response('', 200, [
                 'Location' => '/task'
             ]);
         } else {
-            return new Response('', [
+            return new Response('', 200, [
                 'Location' => '/'
             ]);
         }

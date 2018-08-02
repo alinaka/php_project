@@ -24,10 +24,6 @@
             "path": "/task/finish/{id}",
             "controller": "\\alina\\project\\Controllers\\TaskController::finishAction"
         },
-        "account-info": {
-            "path": "/account",
-            "controller": "\\alina\\project\\Controllers\\AccountController::indexAction"
-        },
         "check-login": {
             "path": "/account/check_login",
             "controller": "\\alina\\project\\Controllers\\AccountController::check_loginAction"
@@ -43,10 +39,6 @@
         "logout": {
             "path": "/account/logout",
             "controller": "\\alina\\project\\Controllers\\AccountController::logoutAction"
-        },
-        "download-avatar": {
-            "path": "/account/downloadAvatar",
-            "controller": "\\alina\\project\\Controllers\\AccountController::downloadAvatarAction"
         },
         "comment-add": {
             "path": "/comment/add",
@@ -83,6 +75,14 @@
         "report-get-data": {
             "path": "/report/getData",
             "controller": "\\alina\\project\\Controllers\\ReportController::getDataAction"
+        },
+        "profile": {
+            "path": "/profile",
+            "controller": "\\alina\\project\\Controllers\\ProfileController::indexAction"
+        },
+        "profile-change-avatar": {
+            "path": "/profile/downloadAvatar",
+            "controller": "\\alina\\project\\Controllers\\ProfileController::downloadAvatarAction"
         }
     },
     "db": {
