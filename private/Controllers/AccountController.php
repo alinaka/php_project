@@ -12,13 +12,11 @@ use alina\project\Models\UserMapper;
 
 class AccountController extends Controller {
 
-    private $model;
     private $post;
     private $session;
 
     public function __construct() {
         parent::__construct();
-        $this->mapper = new UserMapper();
         $this->post = Request::createFromGlobals()->request;
         $this->session = new Session();
         $this->session->start();
@@ -68,7 +66,7 @@ class AccountController extends Controller {
                     'path' => "/task"
                 ]);
             }
-            return new Response($result);
+           return new Response($result);
         }
     }
 
