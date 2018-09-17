@@ -1,13 +1,15 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
-//use alina\project\App\Router;
+use Zend\Diactoros\Response\SapiEmitter;
 
-//Router::run("alina\project\Controllers\\");
-//use Symfony\Component\Console\Application;
-//$application = new Application();
-//$application->run();
-$urls = file_get_contents('../config.json');
-$app = new \alina\project\App\App($urls);
-$app->run();
+chdir(dirname(__DIR__));
+require 'vendor/autoload.php';
 
-?>
+$urls = file_get_contents('config.json');
+$app = new \Framework\Http\Router\App($urls); 
+
+$response = $app->run();
+
+$response = $response->withHeader('X-Developer', 'Alinakago');
+### Sending
+$emitter = new SapiEmitter();
+$emitter->emit($response);

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+            <meta charset="UTF-8">
+            <link rel="stylesheet" href="/css/bootstrap.min.css">
+            <link rel="stylesheet" href="/css/fontawesome-all.css">
+            <link rel="stylesheet" href="/css/style.css" />
+            <link rel="stylesheet" href="/js/jquery/jquery-ui.min.css">
+            <link rel="stylesheet" href="/js/jquery/jquery-ui.structure.min.css">
+            <link rel="stylesheet" href="/js/jquery/jquery-ui.theme.min.css">
+            <title>{% block title %}{{ page_title }}{% endblock %}</title>
+        {% endblock %}
+    </head>
+    <body>
+        <div class="container">
+            <div> {% block content %}{% endblock %}</div>
+            {% include "registration_modal.html.twig" %}
+            {% include "result_modal.html.twig" %}
+            {% include 'footer.html.twig' %}
+        </div>
+        <div>
+            {% block scripts %}
+                <script src="/js/jquery-3.3.1.min.js"></script>
+                <script src="/js/jquery/jquery-ui.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+                <script src="/js/bootstrap.min.js"></script>
+                <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>     
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+                <script src="/js/script.js"></script>
+                <script src="/js/reports.js"></script>
+            {% endblock %}
+        </div>
+
+    </body>
+</html>

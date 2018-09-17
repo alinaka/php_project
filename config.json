@@ -86,9 +86,9 @@
         }
     },
     "db": {
-        "servername": "localhost",
+        "servername": "127.0.0.1",
         "db_name": "tt_project",
-        "username": "root",
-        "password": ""       
+        "username": "user",
+        "password": "1234"       
     }
 }
